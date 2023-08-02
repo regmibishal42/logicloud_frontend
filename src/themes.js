@@ -40,6 +40,18 @@ export const tokensDark = {
       800: "#665429",
       900: "#332a14",
     },
+    // ternary:{
+    //   50: "#ffffff", // manually adjusted
+    //   100: "#ffffff",
+    //   200: "#ffffff",
+    //   300: "#ffffff",
+    //   400: "#ffffff",
+    //   500: "#ffffff",
+    //   600: "#ffffff",
+    //   700: "#ffffff",
+    //   800: "#ffffff",
+    //   900: "#ffffff",
+    // }
   };
   
   // function that reverses the color palette
