@@ -1,5 +1,6 @@
 
-import {Button,Container,Typography,Grid,Checkbox,Paper,Box,Link,TextField,CssBaseline,FormControlLabel} from "@mui/material";
+import {Button,Container,Typography,Grid,Checkbox,Paper,Box,TextField,CssBaseline,FormControlLabel} from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const handleSubmit = (event) => {
@@ -106,13 +107,15 @@ const Login = () => {
                 </Button>
                 <Grid container>
                   <Grid item xs>
-                    <Link href="#" variant="body2">
+                    <Link to="#">
                       Forgot password?
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href="/signup" variant="body2">
+                    <Link to="/signup">
+                      <Typography variant="body2" >
                       {"Don't have an account? Sign Up"}
+                      </Typography>
                     </Link>
                   </Grid>
                 </Grid>
