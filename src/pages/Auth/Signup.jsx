@@ -1,5 +1,6 @@
 
-import {Button,Container,Typography,Grid,Checkbox,Paper,Box,Link,TextField,CssBaseline,FormControlLabel} from "@mui/material";
+import {Button,Container,Typography,Grid,Box,TextField,CssBaseline,Paper} from "@mui/material";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const handleSubmit = (event) => {
@@ -116,16 +117,16 @@ const SignUp = () => {
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                 >
-                  Sign In
+                  Sign Up
                 </Button>
                 <Grid container>
                   <Grid item xs>
-                    <Link href="#" variant="body2">
+                    <Link to="#">
                       Forgot password?
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href="/login" variant="body2">
+                    <Link to="/login">
                       {"Already have an account? Sign In"}
                     </Link>
                   </Grid>
