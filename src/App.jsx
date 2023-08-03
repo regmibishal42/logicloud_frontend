@@ -23,10 +23,10 @@ function App() {
             {/* <Route element={<Layout />}> */}
             <Route element={<Login />}>
               <Route path="/" element={<Navigate to="/login" replace />} />
-              <Route path="/dashboard" element={<Dashboard />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

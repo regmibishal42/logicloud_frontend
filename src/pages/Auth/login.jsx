@@ -1,27 +1,57 @@
 import React from "react";
 import { Button, Container, Typography, Grid, Checkbox, Paper, Box, TextField, CssBaseline, FormControlLabel, Snackbar } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useGQLQuery,useGQLMutation } from "../../useRequest";
 import { GET_ALL_USERS } from "../../Query/queries";
-import { useToast } from "use-toast-mui";
 import {LOGIN_USER} from "../../Query/user.query.js"
+import { ToastContainer,toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 
 const Login = React.memo(() => {
-  const toast = useToast();
-  const {mutate} = useGQLMutation(LOGIN_USER);
+  const navigate = useNavigate();
+  const {mutate,isLoading,error,data} = useGQLMutation(LOGIN_USER);
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     //todo := validate form data
     const inputData = {
-      email:"bishalregmi@kcc.edu.np",
-      password:"hello123"
+      email:formData.get("email"),
+      password:formData.get("password")
     }
     mutate(inputData)
   };
+  if (error != null){
+    toast.error("Error Occurred",error);
+    console.log("Error From Query",error)
+  }
+  if (data){
+    console.log("Data Found",data);
+    if(data?.auth?.loginUser?.error != null){
+      console.log("Toast"+data?.auth?.loginUser?.error?.message);
+      toast(data?.auth?.loginUser?.error?.message)
+    }
+    if (data?.auth?.loginUser?.data != null){
+      const authToken = data?.auth?.loginUser?.data?.accessToken;
+      console.log(authToken); 
+      navigate("/dashboard")
+    }
+  }
   
   return (
     <div>
+      <ToastContainer 
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      />
       <Container component="main" maxWidth="lg" sx={{ borderRadius: 10, marginTop: 10 }}>
         <Box
           sx={{
