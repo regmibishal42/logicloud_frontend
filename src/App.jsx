@@ -8,25 +8,27 @@ import Dashboard from "./pages/Dashboard";
 import Layout from "./pages/Layout";
 import Login from "./pages/Auth/login";
 import Signup from "./pages/Auth/Signup";
+import { Home } from "@mui/icons-material";
 // React Query
+import { getToken } from './utils/token';
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   console.log("App ReRendering");
+  const token = getToken();
   return (
     <div>
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            {/* <Route element={<Layout />}> */}
-            <Route element={<Login />}>
-              <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route element={<Layout />}>
+              <Route path="/" element={token == null ? (<Navigate to={"/login"} />) : (<Navigate to="/dashboard" replace />)} />
+              <Route path="/dashboard" element={<Dashboard />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
