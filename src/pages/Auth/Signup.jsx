@@ -27,8 +27,6 @@ const SignUp = () => {
       toast(validationError)
       return
     }
-    
-    console.log(inputData);
    mutate(inputData);
   };
   if (error != null) {
@@ -36,7 +34,14 @@ const SignUp = () => {
     console.log("Error From Query", error)
   }
   if (data) {
-    console.log("Create User Data",data);
+    if (data?.auth?.createUser?.error != null){
+      toast.error(data?.auth?.createUser?.error?.message)
+    }
+    if (data?.auth?.createUser?.data != null){
+      toast("Registered Successfully")
+      toast("Now Login using your Credentials")
+      navigate('/login')
+    }
   }
   useEffect(() => {
     const token = getToken();
