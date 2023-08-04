@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Container, Typography, Grid, Checkbox, Paper, Box, TextField, CssBaseline, FormControlLabel, Snackbar } from "@mui/material";
 import { Link, redirect } from "react-router-dom";
 import {useGQLMutation } from "../../useRequest";
@@ -7,9 +7,9 @@ import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import { saveToken,getToken } from "../../utils/token";
-import { useEffect } from "react";
+import { LoginValidation } from "../../utils/validation/user.validators";
+
 const Login = React.memo(() => {
-  const [isLoggedIn,setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const {mutate,isLoading,error,data} = useGQLMutation(LOGIN_USER);
   const handleSubmit = (event) => {
@@ -19,6 +19,11 @@ const Login = React.memo(() => {
     const inputData = {
       email:formData.get("email"),
       password:formData.get("password")
+    }
+    const validationError = LoginValidation(inputData);
+    if (validationError){
+      toast(validationError)
+      return
     }
     mutate(inputData)
   };
