@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Container, Typography, Grid, Checkbox, Paper, Box, TextField, CssBaseline, FormControlLabel, Snackbar } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import {useGQLMutation } from "../../useRequest";
 import {LOGIN_USER} from "../../Query/user.query.js"
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
-import { saveToken } from "../../utils/token";
+import { saveToken,getToken } from "../../utils/token";
+import { useEffect } from "react";
 const Login = React.memo(() => {
+  const [isLoggedIn,setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const {mutate,isLoading,error,data} = useGQLMutation(LOGIN_USER);
   const handleSubmit = (event) => {
@@ -37,6 +39,15 @@ const Login = React.memo(() => {
       navigate("/dashboard")
     }
   }
+  useEffect(()=>{
+    console.log("use effect is running")
+    const token = getToken();
+    console.log("Token from useEffect",token)
+    if (token != null){
+      console.log("Already Logged In")
+      navigate("/dashboard")
+    }
+  },[])
   
   return (
     <div>
