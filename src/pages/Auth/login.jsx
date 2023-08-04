@@ -1,13 +1,12 @@
 import React from "react";
 import { Button, Container, Typography, Grid, Checkbox, Paper, Box, TextField, CssBaseline, FormControlLabel, Snackbar } from "@mui/material";
-import { Link, Navigate } from "react-router-dom";
-import { useGQLQuery,useGQLMutation } from "../../useRequest";
-import { GET_ALL_USERS } from "../../Query/queries";
+import { Link } from "react-router-dom";
+import {useGQLMutation } from "../../useRequest";
 import {LOGIN_USER} from "../../Query/user.query.js"
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
-
+import { saveToken } from "../../utils/token";
 const Login = React.memo(() => {
   const navigate = useNavigate();
   const {mutate,isLoading,error,data} = useGQLMutation(LOGIN_USER);
@@ -22,7 +21,7 @@ const Login = React.memo(() => {
     mutate(inputData)
   };
   if (error != null){
-    toast.error("Error Occurred",error);
+    toast.error("Network Error Occurred",error.message);
     console.log("Error From Query",error)
   }
   if (data){
@@ -34,6 +33,7 @@ const Login = React.memo(() => {
     if (data?.auth?.loginUser?.data != null){
       const authToken = data?.auth?.loginUser?.data?.accessToken;
       console.log(authToken); 
+      saveToken(authToken);
       navigate("/dashboard")
     }
   }
