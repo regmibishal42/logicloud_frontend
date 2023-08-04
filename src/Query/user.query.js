@@ -16,3 +16,34 @@ mutation Login($input: LoginInput!) {
   }
 }
 `;
+
+export const CREATE_USER = gql`
+mutation CreateUser($input:UserInput!){
+  auth{
+    createUser(input:$input){
+data{
+  id
+  email
+  userType
+  isVerified
+  status
+  profile{
+    firstName
+    lastName
+    contactNumber
+    DateOfBirth
+    Address{
+      City
+      District
+      State
+    }
+  }
+}
+      error{
+        message
+        code
+      }
+    }
+  }
+}
+`;
