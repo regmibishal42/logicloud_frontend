@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Button, Container, Typography, Grid, Checkbox, Paper, Box, TextField, CssBaseline, FormControlLabel, Snackbar } from "@mui/material";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {useGQLMutation } from "../../useRequest";
 import {LOGIN_USER} from "../../Query/user.query.js"
 import { ToastContainer,toast } from "react-toastify";
