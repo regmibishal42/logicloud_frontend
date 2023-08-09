@@ -47,3 +47,31 @@ data{
   }
 }
 `;
+
+export const FORGET_PASSWORD = gql`
+mutation forgetPassword($input:ForgetPasswordInput!){
+  auth{
+    forgetPassword(input:$input){
+      userID
+      error{
+        message
+        code
+      }
+    }
+  }
+}
+`;
+
+export const RESET_PASSWORD = gql`
+mutation Reset($input:ResetPasswordInput!){
+  auth{
+    resetPassword(input:$input){
+      userID
+      error{
+        message
+        code
+      }
+    }
+  }
+}
+`;

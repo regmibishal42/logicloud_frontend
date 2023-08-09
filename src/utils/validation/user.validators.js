@@ -38,3 +38,36 @@ export const LoginValidation = (loginData) =>{
     return
 
 }
+
+export const ForgetPasswordValidation = (forgetPasswordData) =>{
+    const emailValidator = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+    if (forgetPasswordData.email == "") {
+        return "Please Enter Your Email"
+    }
+    if(!emailValidator.test(forgetPasswordData.email)){
+        return "Enter a valid email"
+    }
+    return
+}
+
+export const ResetPasswordValidation = (resetPasswordData) =>{
+    const emailValidator = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+    const passwordValidator = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+
+    if (resetPasswordData.email == ""|| resetPasswordData.otp =="" || resetPasswordData.newPassword == "") {
+        return "Please Fill All the Fields"
+    }
+    if(!emailValidator.test(resetPasswordData.email)){
+        return "Enter a valid email"
+    }
+    if (resetPasswordData.otp.length != 6 ){
+        return "Enter a valid otp"
+    }
+    if (resetPasswordData.newPassword.length < 8){
+        return "password should be at-least 8 char long"
+    }
+    if (!passwordValidator.test(resetPasswordData.newPassword)){
+        return "Password Must Contain a number and special character"
+    }
+    return
+}
