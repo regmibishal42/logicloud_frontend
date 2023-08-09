@@ -8,7 +8,9 @@ import Dashboard from "./pages/Dashboard";
 import Layout from "./pages/Layout";
 import Login from "./pages/Auth/login";
 import Signup from "./pages/Auth/Signup";
-import { Home } from "@mui/icons-material";
+import ForgetPassword from "./pages/Auth/ForgetPassword";
+import ResetPassword from "./pages/Auth/ResetPassword";
+
 // React Query
 import { getToken } from './utils/token';
 
@@ -29,6 +31,8 @@ function App() {
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/forget-password" element={<ForgetPassword />}/>
+            <Route path="/reset-password" element={<ResetPassword />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
