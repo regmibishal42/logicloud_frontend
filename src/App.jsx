@@ -17,7 +17,6 @@ import { getToken } from './utils/token';
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-  console.log("App ReRendering");
   const token = getToken();
   return (
     <div>

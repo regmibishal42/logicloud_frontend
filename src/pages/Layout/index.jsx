@@ -26,10 +26,11 @@ const Layout = () => {
     headers:header
   })
   if(error){
-    console.log("React Query Error",error)
+    alert("Network Error",error.message)
   }
   if (data){
     if(data?.auth?.getUserDetails?.error){
+      alert(data?.auth?.getUserDetails?.error.message)
       console.log("Error While Fetching User",data?.auth?.getUserDetails?.error.message)
     }
     if(data?.auth?.getUserDetails?.data){
