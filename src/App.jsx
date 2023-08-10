@@ -17,7 +17,6 @@ import { getToken } from './utils/token';
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-  console.log("App ReRendering");
   const token = getToken();
   return (
     <div>
@@ -25,7 +24,7 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            <Route element={<Layout />}>
+            <Route element={token == null ? (<Navigate to="/login" />) :(<Layout />)}>
               <Route path="/" element={token == null ? (<Navigate to={"/login"} />) : (<Navigate to="/dashboard" replace />)} />
               <Route path="/dashboard" element={<Dashboard />} />
             </Route>
