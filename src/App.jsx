@@ -25,7 +25,7 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            <Route element={<Layout />}>
+            <Route element={token == null ? (<Navigate to="/login" />) :(<Layout />)}>
               <Route path="/" element={token == null ? (<Navigate to={"/login"} />) : (<Navigate to="/dashboard" replace />)} />
               <Route path="/dashboard" element={<Dashboard />} />
             </Route>
