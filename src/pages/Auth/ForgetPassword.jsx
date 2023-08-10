@@ -4,11 +4,39 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useGQLMutation } from '../../useRequest';
 import { Container, Box, Typography, CssBaseline, Grid, TextField, Button, Paper } from "@mui/material";
 import { useNavigate, Link } from 'react-router-dom';
+import {ForgetPasswordValidation} from "../../utils/validation/user.validators";
+import { FORGET_PASSWORD } from "../../Query/user.query";
 
 const ForgetPassword = () => {
     const navigate = useNavigate();
+    const {mutate,isLoading,error,data} = useGQLMutation(FORGET_PASSWORD);
+
+    //submit handler
     const handleSubmit = (e) => {
-        console.log("submit clicked")
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const inputData = {
+            email:formData.get("email")
+        }
+        const validationError = ForgetPasswordValidation(inputData);
+        if(validationError){
+            toast.error(validationError);
+            return
+        }
+        mutate(inputData);
+    }
+    if (error != null){
+        toast.error(error.message)
+        console.log("Query Error",error)
+    }
+    if (data != null){
+        console.log("Data From Query",data)
+        if (data?.auth?.forgetPassword?.error){
+            toast.error(data?.auth?.forgetPassword?.error.message)
+        }
+        if(data?.auth?.forgetPassword?.userID){
+            alert("reset OTP send to your email")
+        }
     }
     return (
         <>
