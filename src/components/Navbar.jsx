@@ -15,6 +15,7 @@ import { setMode } from "../state/index";
 import { useTheme, AppBar, Toolbar,IconButton,InputBase } from "@mui/material"
 
 const Navbar = ({
+    user,
     isSidebarOpen,
     setIsSidebarOpen,
 }) => {
@@ -57,6 +58,7 @@ const Navbar = ({
                 <IconButton>
                     <SettingsOutlined sx={{fontSize:"25px"}}/>
                 </IconButton>
+                {/* User Information */}
             </FlexBetween>
         </Toolbar>
     </AppBar>
