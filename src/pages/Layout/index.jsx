@@ -15,6 +15,7 @@ const Layout = () => {
   const dispatch = useDispatch();
   const token  = getToken()
   const navigate = useNavigate();
+  const userData = {}
   if (token == null) {
       navigate('/login')
   }
@@ -34,7 +35,7 @@ const Layout = () => {
       console.log("Error While Fetching User",data?.auth?.getUserDetails?.error.message)
     }
     if(data?.auth?.getUserDetails?.data){
-      const userDetails = data?.auth?.getUserDetails?.data[0]
+      userDetails = data?.auth?.getUserDetails?.data[0]
       dispatch(setUser(userDetails))
     }
     
@@ -44,6 +45,7 @@ const Layout = () => {
   const [isSidebarOpen,setIsSidebarOpen] = useState(true);
   return <Box display={isNonMobile ? "flex" : "block"} width="100%" height="100%">
     <Sidebar
+    user={userData}
     isNonMobile={isNonMobile}
     drawerWidth="250px"
     isSidebarOpen={isSidebarOpen}
