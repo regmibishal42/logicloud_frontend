@@ -13,6 +13,7 @@ import ResetPassword from "./pages/Auth/ResetPassword";
 
 // React Query
 import { getToken } from './utils/token';
+import Products from "./pages/Dashboard/Products";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -27,6 +28,7 @@ function App() {
             <Route element={token == null ? (<Navigate to="/login" />) :(<Layout />)}>
               <Route path="/" element={token == null ? (<Navigate to={"/login"} />) : (<Navigate to="/dashboard" replace />)} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/products" element={<Products />}/>
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
