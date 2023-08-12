@@ -1,11 +1,12 @@
 import React,{useState} from 'react';
-import {} from "@mui/material";
+import {Box} from "@mui/material";
+import Header from '../../components/Header';
 
 const Products = () => {
   return (
-    <div>
-      Products
-    </div>
+    <Box>
+      <Header title="Products" subtitle="See your products here" />
+    </Box>
   )
 }
 
