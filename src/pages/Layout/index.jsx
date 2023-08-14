@@ -15,7 +15,7 @@ const Layout = () => {
   const dispatch = useDispatch();
   const token = getToken()
   const navigate = useNavigate();
-  const userData = {}
+  let userData = {}
   if (token == null) {
     navigate('/login')
   }
@@ -24,7 +24,10 @@ const Layout = () => {
   const { data, error, isLoading } = useGQLQuery({
     key: "getUser",
     query: GET_USER,
-    headers: header
+    headers: header,
+    variables:{
+      "GetProductsByFilterInput":{}
+    }
   })
   if (error) {
     alert("Network Error", error.message)
@@ -35,8 +38,8 @@ const Layout = () => {
       console.log("Error While Fetching User", data?.auth?.getUserDetails?.error.message)
     }
     if (data?.auth?.getUserDetails?.data) {
-      userDetails = data?.auth?.getUserDetails?.data[0]
-      dispatch(setUser(userDetails))
+      userData = data?.auth?.getUserDetails?.data[0]
+      dispatch(setUser(userData))
     }
 
   }
