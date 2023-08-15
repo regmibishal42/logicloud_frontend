@@ -21,19 +21,18 @@ import { useSelector } from "react-redux";
 import { GetHeader } from "../../utils/getHeader";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { DateFormatter } from '../../utils/utils.functions';
 
 const Product = ({
   id,
   name,
   boughtOn,
   units,
-  categoryID,
   sellingPrice,
   categoryName,
 })=>{
   const theme = useTheme();
-  const [isExpanded,setIsExpanded] = useState(false);
-  console.table(id,name,boughtOn,units,categoryID,sellingPrice,categoryName)
+  const formattedDate = DateFormatter(boughtOn)
   return (
     <Card 
     sx={{
@@ -51,13 +50,13 @@ const Product = ({
           {name}
         </Typography>
         <Typography sx={{mb:"1.5rem"}} color={theme.palette.secondary[400]}>
+        रु.{sellingPrice}
+        </Typography>
+        <Typography sx={{mb:"1.5rem"}} color={theme.palette.secondary[400]}>
           Units: {units}
         </Typography>
         <Typography sx={{mb:"1.5rem"}} color={theme.palette.secondary[400]}>
-          {id}
-        </Typography>
-        <Typography sx={{mb:"1.5rem"}} color={theme.palette.secondary[400]}>
-        रु.{sellingPrice}
+          BoughtAt: {formattedDate}
         </Typography>
       </CardContent>
     </Card>
