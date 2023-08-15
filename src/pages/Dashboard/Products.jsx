@@ -21,17 +21,18 @@ import { useSelector } from "react-redux";
 import { GetHeader } from "../../utils/getHeader";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { DateFormatter } from '../../utils/utils.functions';
 
 const Product = ({
   id,
   name,
   boughtOn,
   units,
-  categoryID,
+  sellingPrice,
   categoryName,
 })=>{
   const theme = useTheme();
-  const [isExpanded,setIsExpanded] = useState(false);
+  const formattedDate = DateFormatter(boughtOn)
   return (
     <Card 
     sx={{
@@ -49,10 +50,13 @@ const Product = ({
           {name}
         </Typography>
         <Typography sx={{mb:"1.5rem"}} color={theme.palette.secondary[400]}>
-          {units}
+        रु.{sellingPrice}
         </Typography>
         <Typography sx={{mb:"1.5rem"}} color={theme.palette.secondary[400]}>
-          {id}
+          Units: {units}
+        </Typography>
+        <Typography sx={{mb:"1.5rem"}} color={theme.palette.secondary[400]}>
+          BoughtAt: {formattedDate}
         </Typography>
       </CardContent>
     </Card>
@@ -83,9 +87,11 @@ const Products = () => {
   if (data) {
     if (data?.product?.getProductsByFilter?.error) {
       toast.error(data?.product?.getProductsByFilter?.error.message)
+      console.log("React Query Error",error)
     }
     if (data?.product?.getProductsByFilter?.data) {
       products = data?.product?.getProductsByFilter?.data;
+      console.log("The Product Unit is",products[0].units)
       console.log("The Products are",products)
     }
     if (data?.product?.getProductsByFilter.pageInfo) {
@@ -114,11 +120,13 @@ const Products = () => {
           {products.map((product)=>(
             <Product 
             key={product.id}
+            id={product.id}
             name={product.name}
-            units={products.units}
+            units={product.units}
             boughtOn={product.boughtOn}
             categoryID={product.category.id}
             categoryName={product.category.name}
+            sellingPrice={product.sellingPrice}
             /> 
           ))
 
