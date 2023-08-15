@@ -11,6 +11,8 @@ mutation createProduct($input:CreateProductInput!){
         name
         boughtOn
         units
+        costPrice,
+        sellingPrice,
         category{
           id
           name
@@ -35,6 +37,8 @@ query GetProductsByFilter($input:GetProductsByFilterInput!){
         name
         boughtOn
         units
+        costPrice
+        sellingPrice
         category{
           id
           name
