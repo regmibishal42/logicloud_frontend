@@ -105,12 +105,10 @@ const Products = () => {
 
   }
   if(categoryData){
-    console.log("Category Data",categoryData)
     if(categoryData?.product?.category?.getAllCategory?.error){
       toast.error(categoryData?.product?.category?.getAllCategory?.error.message)
     }
     if(categoryData?.product?.category?.getAllCategory?.data){
-      console.log("Categories are",categoryData?.product?.category?.getAllCategory?.data)
         dispatch(setCategory(categoryData?.product?.category?.getAllCategory?.data))
     }
   }
