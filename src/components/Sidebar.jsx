@@ -44,12 +44,12 @@ const NavItems = [
         icon: <ShoppingCartOutlined />
     },
     {
-        text: "Transactions",
-        icon: <ReceiptLongOutlined />
+        text: "Sales Details",
+        icon: null
     },
     {
         text: "Sales",
-        icon: null
+        icon: <ReceiptLongOutlined />
     },
     {
         text: "Overview",
