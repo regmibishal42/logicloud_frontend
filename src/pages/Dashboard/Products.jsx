@@ -16,12 +16,14 @@ import {
 import Header from '../../components/Header';
 import { useGQLQuery } from '../../useRequest';
 import { GET_ALL_PRODUCTS } from "../../Query/products";
+import {GET_ALL_CATEGORY} from "../../Query/Category/category.query";
 import { getToken } from "../../utils/token";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GetHeader } from "../../utils/getHeader";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { DateFormatter } from '../../utils/utils.functions';
+import { setCategory } from '../../state';
 
 const Product = ({
   id,
@@ -66,9 +68,10 @@ const Product = ({
 const Products = () => {
   const token = getToken();
   const header = GetHeader(token);
+  const dispatch = useDispatch();
   let products = [];
   let pages = {}
-  const { data, error, isLoading } = useGQLQuery({
+  const { data:productsData, error:productsError, isLoading:ProductsLoading } = useGQLQuery({
     key: "all_products",
     query: GET_ALL_PRODUCTS,
     headers: header,
@@ -80,24 +83,36 @@ const Products = () => {
     }
 
   });
-  if (error) {
-    console.log("React-Query Error Occurred", error)
-    toast.error(error)
+  const {data:categoryData,isLoading:categoryLoading} = useGQLQuery({
+    key:"all_categories",
+    query:GET_ALL_CATEGORY,
+    headers:header
+  })
+  if (productsError) {
+    console.log("React-Query Error Occurred", productsError)
+    toast.error(productsError)
   }
-  if (data) {
-    if (data?.product?.getProductsByFilter?.error) {
-      toast.error(data?.product?.getProductsByFilter?.error.message)
-      console.log("React Query Error",error)
+  if (productsData) {
+    if (productsData?.product?.getProductsByFilter?.error) {
+      toast.error(productsData?.product?.getProductsByFilter?.error.message)
     }
-    if (data?.product?.getProductsByFilter?.data) {
-      products = data?.product?.getProductsByFilter?.data;
-      console.log("The Product Unit is",products[0].units)
-      console.log("The Products are",products)
+    if (productsData?.product?.getProductsByFilter?.data) {
+      products = productsData?.product?.getProductsByFilter?.data;
     }
-    if (data?.product?.getProductsByFilter.pageInfo) {
-      pages = data?.product?.getProductsByFilter?.pageInfo
+    if (productsData?.product?.getProductsByFilter.pageInfo) {
+      pages = productsData?.product?.getProductsByFilter?.pageInfo
     }
 
+  }
+  if(categoryData){
+    console.log("Category Data",categoryData)
+    if(categoryData?.product?.category?.getAllCategory?.error){
+      toast.error(categoryData?.product?.category?.getAllCategory?.error.message)
+    }
+    if(categoryData?.product?.category?.getAllCategory?.data){
+      console.log("Categories are",categoryData?.product?.category?.getAllCategory?.data)
+        dispatch(setCategory(categoryData?.product?.category?.getAllCategory?.data))
+    }
   }
   const isNonMobile = useMediaQuery("(min-width:1000px)");
   return (
@@ -115,7 +130,7 @@ const Products = () => {
         theme="light"
       />
       <Header title="Products" subtitle="See your products here" />
-      {data || !isLoading ? (
+      {productsData || !ProductsLoading ? (
         <Box mt="20px" display="grid" gridTemplateColumns="repeat(4,minmax(0,1fr))" justifyContent="space-between" rowGap="20px" columnGap="1.33%" sx={{ "& >div": { gridColumn: isNonMobile ? undefined : "span 4" } }}>
           {products.map((product)=>(
             <Product 
