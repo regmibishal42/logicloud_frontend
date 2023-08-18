@@ -9,8 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { saveToken,getToken } from "../../utils/token";
 import { LoginValidation } from "../../utils/validation/user.validators";
 
-const Login = React.memo(() => {
+const Login = () => {
   const navigate = useNavigate();
+  const token = getToken();
   const {mutate,isLoading,error,data} = useGQLMutation(LOGIN_USER);
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -41,18 +42,14 @@ const Login = React.memo(() => {
       const authToken = data?.auth?.loginUser?.data?.accessToken;
       console.log(authToken); 
       saveToken(authToken);
-      navigate("/dashboard")
+      navigate("/")
     }
   }
   useEffect(()=>{
-    console.log("use effect is running")
-    const token = getToken();
-    console.log("Token from useEffect",token)
-    if (token != null){
-      console.log("Already Logged In")
-      navigate("/dashboard")
+    if(token){
+      navigate('/')
     }
-  },[])
+},[])
   
   return (
     <div>
@@ -182,7 +179,7 @@ const Login = React.memo(() => {
       </Container>
     </div>
   )
-});
+};
 
 export default Login
 
