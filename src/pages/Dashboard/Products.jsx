@@ -1,25 +1,17 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Card,
-  CardActions,
-  CardContent,
-  Collapse,
   Button,
-  Typography,
-  Rating,
   useTheme,
   useMediaQuery,
   Stack
-
-
 } from "@mui/material";
 import Header from '../../components/Header';
 import { useGQLQuery } from '../../useRequest';
 import { GET_ALL_PRODUCTS } from "../../Query/products";
 import {GET_ALL_CATEGORY} from "../../Query/Category/category.query";
 import { getToken } from "../../utils/token";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GetHeader } from "../../utils/getHeader";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,45 +19,7 @@ import { DateFormatter } from '../../utils/utils.functions';
 import { setCategory } from '../../state';
 import { DataGrid } from '@mui/x-data-grid';
 
-const Product = ({
-  id,
-  name,
-  boughtOn,
-  units,
-  sellingPrice,
-  categoryName,
-})=>{
-  const theme = useTheme();
-  const formattedDate = DateFormatter(boughtOn)
-  return (
-    <Card 
-    sx={{
-      backgroundImage:"none",
-      backgroundColor:theme.palette.background.alt,
-      borderRadius:"0.55rem "
-    }}
-    
-    >
-      <CardContent>
-        <Typography sx={{fontSize:14}} color={theme.palette.secondary[700]} gutterBottom>
-          {categoryName}
-        </Typography>
-        <Typography variant='h5' component="div">
-          {name}
-        </Typography>
-        <Typography sx={{mb:"1.5rem"}} color={theme.palette.secondary[400]}>
-        रु.{sellingPrice}
-        </Typography>
-        <Typography sx={{mb:"1.5rem"}} color={theme.palette.secondary[400]}>
-          Units: {units}
-        </Typography>
-        <Typography sx={{mb:"1.5rem"}} color={theme.palette.secondary[400]}>
-          BoughtAt: {formattedDate}
-        </Typography>
-      </CardContent>
-    </Card>
-  )
-}
+
 
 const Products = () => {
   const token = getToken();
@@ -151,16 +105,26 @@ const Products = () => {
       field:"boughtOn",
       headerName:"BoughtOn",
       flex:1,
+      valueGetter:(params)=>{
+        const formattedDate = DateFormatter(params.row.boughtOn)
+        return formattedDate;
+      }
     },
+    
     {
       field:"units",
       headerName:"AvailableUnits",
-      flex:1,
+      flex:0.5,
     },
     {
-      field:"createdAt",
-      headerName:"CreatedAt",
-      flex:1,
+      field:"costPrice",
+      headerName:"CostPrice",
+      flex:0.5,
+    },
+    {
+      field:"sellingPrice",
+      headerName:"SellingPrice",
+      flex:0.5,
     },
     {
       field: 'action',
@@ -196,26 +160,6 @@ const Products = () => {
         theme="light"
       />
       <Header title="Products" subtitle="See your products here" />
-      {/* {productsData || !ProductsLoading ? (
-        <Box mt="20px" display="grid" gridTemplateColumns="repeat(4,minmax(0,1fr))" justifyContent="space-between" rowGap="20px" columnGap="1.33%" sx={{ "& >div": { gridColumn: isNonMobile ? undefined : "span 4" } }}>
-          {products.map((product)=>(
-            <Product 
-            key={product.id}
-            id={product.id}
-            name={product.name}
-            units={product.units}
-            boughtOn={product.boughtOn}
-            categoryID={product.category.id}
-            categoryName={product.category.name}
-            sellingPrice={product.sellingPrice}
-            /> 
-          ))
-
-          }
-        </Box>
-      ) : (<>
-        Loading...
-      </>)} */}
       <Box height = "80vh"
       sx={{
         "& .MuiDataGrid-root": {
