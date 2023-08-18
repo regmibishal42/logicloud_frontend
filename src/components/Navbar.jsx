@@ -14,6 +14,8 @@ import { setMode } from "../state/index";
 // import userImage from "../assets";
 import { useTheme, AppBar, Toolbar,IconButton,InputBase,Box,Divider,Typography,Button,Menu,MenuItem } from "@mui/material"
 import profileImage from "../assets/userImage.png";
+import { removeToken } from '../utils/token';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({
     user,
@@ -22,10 +24,16 @@ const Navbar = ({
 }) => {
     const dispatch = useDispatch();
     const theme = useTheme();
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const isOpen = Boolean(anchorEl);
     const handleClick = (event) => setAnchorEl(event.currentTarget);
-    const handleClose = () => setAnchorEl(null);
+    const handleClose = () => {
+        setAnchorEl(null)
+        removeToken();
+        navigate('/login')
+        return
+    };
     return <AppBar
         sx={{
             position: "static",
