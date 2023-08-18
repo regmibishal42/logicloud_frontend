@@ -43,12 +43,6 @@ const SignUp = () => {
       navigate('/login')
     }
   }
-  useEffect(() => {
-    const token = getToken();
-    if (token != null) {
-      navigate("/login")
-    }
-  }, []);
   return (
     <div>
       <ToastContainer

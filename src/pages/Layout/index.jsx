@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Box, useMediaQuery } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -13,23 +13,23 @@ import { GetHeader } from '../../utils/getHeader';
 
 const Layout = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const token = getToken()
-  const navigate = useNavigate();
-  let userData = {}
-  if (token == null) {
-    navigate('/login')
+  if(!token){
+    navigate("/login")
   }
+  let userData = {}
 
   const header = GetHeader(token);
   const { data, error, isLoading } = useGQLQuery({
     key: "getUser",
     query: GET_USER,
     headers: header,
-    variables:{
-      "GetProductsByFilterInput":{}
+    variables: {
+      "GetProductsByFilterInput": {}
     }
   })
-  if (error) {
+  if (!isLoading && error) {
     alert("Network Error", error.message)
   }
   if (data) {
@@ -43,7 +43,6 @@ const Layout = () => {
     }
 
   }
-  console.log("Finished Query")
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   return <Box display={isNonMobile ? "flex" : "block"} width="100%" height="100%">
