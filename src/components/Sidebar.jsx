@@ -24,7 +24,10 @@ import {
     AdminPanelSettingsOutlined,
     CalendarMonthOutlined,
     ChevronRightOutlined,
-    SettingsOutlined
+    SettingsOutlined,
+    BadgeOutlined,
+    AddCardOutlined,
+
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from 'react-router-dom';
 import FlexBetween from "./FlexBetween";
@@ -36,12 +39,16 @@ const NavItems = [
         icon: <HomeOutlined />
     },
     {
-        text: "Client Facing",
+        text: "Products Domain",
         icon: null
     },
     {
         text: "Products",
         icon: <ShoppingCartOutlined />
+    },
+    {
+        text: "Add-Products",
+        icon: <AddCardOutlined />
     },
     {
         text: "Sales Details",
@@ -66,6 +73,18 @@ const NavItems = [
     {
         text: "Breakdown",
         icon: <PieChartOutline />
+    },
+    {
+        text: "Staff Domain",
+        icon: null
+    },
+    {
+        text: "Staffs",
+        icon: <BadgeOutlined />
+    },
+    {
+        text: "Add-Staffs",
+        icon: <AddCardOutlined />
     },
     {
         text: "Management",
@@ -169,7 +188,7 @@ const Sidebar = ({
                             })}
                         </List>
                     </Box>
-                        {/* User Details */}
+                        {/* User Details
                         <Box position="absolute" bottom="2rem">
                             <Divider />
                             <FlexBetween textTransform="none" gap="1rem" m="1.5rem 2rem 0 3rem">
@@ -192,7 +211,7 @@ const Sidebar = ({
                                         <SettingsOutlined sx={{color:theme.palette.secondary[300],fontSize:"25px"}}/>
                                
                             </FlexBetween>
-                        </Box>
+                        </Box> */}
                 </Drawer>
             )}
         </Box>
