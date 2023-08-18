@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { Button, Container, Typography, Grid, Checkbox, Paper, Box, TextField, CssBaseline, FormControlLabel, Snackbar } from "@mui/material";
 import { Link } from "react-router-dom";
 import {useGQLMutation } from "../../useRequest";
@@ -9,7 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { saveToken,getToken } from "../../utils/token";
 import { LoginValidation } from "../../utils/validation/user.validators";
 
+
 const Login = () => {
+  const [showPassword,setShowPassword] = useState(false)
   const navigate = useNavigate();
   const token = getToken();
   const {mutate,isLoading,error,data} = useGQLMutation(LOGIN_USER);
@@ -141,13 +143,13 @@ const Login = () => {
                     fullWidth
                     name="password"
                     label="Password"
-                    type="password"
+                    type={showPassword ? "text" :"password"}
                     id="password"
                     autoComplete="current-password"
                   />
                   <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
+                    control={<Checkbox value="remember" color="primary" onChange={()=>setShowPassword(!showPassword)}/>}
+                    label="Show Password"
                   />
                   <Button
                     type="submit"
@@ -159,7 +161,7 @@ const Login = () => {
                   </Button>
                   <Grid container>
                     <Grid item xs>
-                      <Link to="#">
+                      <Link to="/forget-password">
                         Forgot password?
                       </Link>
                     </Grid>

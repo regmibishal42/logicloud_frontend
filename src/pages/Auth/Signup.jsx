@@ -165,7 +165,7 @@ const SignUp = () => {
                   </Button>
                   <Grid container>
                     <Grid item xs>
-                      <Link to="#">
+                      <Link to="/forget-password">
                         Forgot password?
                       </Link>
                     </Grid>
