@@ -72,7 +72,7 @@ const Navbar = ({
                     <SettingsOutlined sx={{fontSize:"25px"}}/>
                 </IconButton>
                 {/* User Information */}
-                User Details
+                {user ? user?.profile?.firstName : "User"}
                 <FlexBetween>
             <Button
               onClick={handleClick}

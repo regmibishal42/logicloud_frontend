@@ -8,6 +8,24 @@ export const GET_ALL_USERS = gql`
         id
         email
         userType
+        isVerified
+        status
+        createdAt
+        profile{
+          firstName
+          lastName
+          contactNumber
+          DateOfBirth
+          Address{
+            City
+            District
+            State
+          }
+        }
+        additionalInformation{
+          isStaff
+          hasOrganization
+        }
       }
       error{
         message
@@ -26,6 +44,24 @@ export const GET_USER = gql`
         id
         email
         userType
+        isVerified
+        status
+        createdAt
+        profile{
+          firstName
+          lastName
+          contactNumber
+          DateOfBirth
+          Address{
+            City
+            District
+            State
+          }
+        }
+        additionalInformation{
+          isStaff
+          hasOrganization
+        }
       }
       error{
         message
