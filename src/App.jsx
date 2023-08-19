@@ -15,6 +15,7 @@ import ResetPassword from "./pages/Auth/ResetPassword";
 import { getToken } from './utils/token';
 import Products from "./pages/Dashboard/Products";
 import Sales from "./pages/Dashboard/Sales";
+import Staffs from "./pages/Dashboard/Staffs";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -32,11 +33,13 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/products" element={<Products />}/>
               <Route path="/sales" element={<Sales />} />
+              <Route path="/staffs" element={<Staffs />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/forget-password" element={<ForgetPassword />}/>
             <Route path="/reset-password" element={<ResetPassword />} />
+      
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
