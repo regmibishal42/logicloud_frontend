@@ -9,6 +9,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import Header from '../../components/Header';
 import { useTheme } from '@emotion/react';
 import { Box } from '@mui/material';
+import DataGridCustomToolbar from '../../components/DataGridCustomToolbar';
 
 
 const Sales = () => {
@@ -17,6 +18,8 @@ const Sales = () => {
   const header = GetHeader(token);
   const [page, setPage] = useState(1);
  // const [sort,setSort] = useState("");
+ const [search,setSearch] = useState("");
+ const [searchInput,setSearchInput] = useState("");
   let sales = [];
   let pages = {};
   const { data: salesData, isLoading: salesDataLoading } = useGQLQuery({
@@ -143,7 +146,13 @@ const Sales = () => {
         paginationMode='server'
         sortingMode='server'
         onPageChange = {(newPage)=>setPage(newPage)}
-       // onPageSizeChnage
+       // onPageSizeChange
+       components={{Toolbar:DataGridCustomToolbar}}
+       componentsProps={{
+        toolbar:{
+          searchInput,setSearchInput,setSearch
+        }
+       }}
         />
       </Box>
     </Box>
