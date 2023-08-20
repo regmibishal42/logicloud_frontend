@@ -18,6 +18,7 @@ import AddProducts from "./pages/Dashboard/Products/AddProducts";
 import Sales from "./pages/Dashboard/Sales/Sales";
 import Staffs from "./pages/Dashboard/Staffs/Staffs";
 import ViewProduct from "./pages/Dashboard/Products/ViewProduct";
+import Category from "./pages/Dashboard/Products/Category";
 
 
 function App() {
@@ -37,7 +38,7 @@ function App() {
               <Route path="/products" element={<Products />}/>
               <Route path="/add-products" element={<AddProducts />}/>
               <Route path="/product/:productID" element={<ViewProduct />}/>
-
+              <Route path="/category" element={<Category />} />
               <Route path="/sales" element={<Sales />} />
               <Route path="/staffs" element={<Staffs />} />
             </Route>

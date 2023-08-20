@@ -20,3 +20,19 @@ mutation createCategory($input:CreateCategoryInput!){
   }
 }
 `;
+
+export const DELETE_CATEGORY = gql`
+mutation deleteCategory($input:DeleteCategoryInput!){
+  product{
+    category{
+      deleteCategory(input:$input){
+        id
+        error{
+          message
+          code
+        }
+}
+    }
+  }
+}
+`;
