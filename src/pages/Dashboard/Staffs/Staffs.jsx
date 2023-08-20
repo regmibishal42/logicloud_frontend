@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { useGQLQuery } from '../../useRequest';
-import { GET_ALL_STAFFS } from '../../Query/Staffs/staff.query';
-import { GetHeader } from "../../utils/getHeader";
-import { getToken } from "../../utils/token";
+import { useGQLQuery } from '../../../useRequest';
+import { GET_ALL_STAFFS } from '../../../Query/Staffs/staff.query';
+import { GetHeader } from "../../../utils/getHeader";
+import { getToken } from "../../../utils/token";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { DataGrid } from '@mui/x-data-grid';
-import Header from '../../components/Header';
+import Header from '../../../components/Header';
 import { useTheme } from '@emotion/react';
 import { Box } from '@mui/material';
-import DataGridCustomToolbar from '../../components/DataGridCustomToolbar';
+import DataGridCustomToolbar from '../../../components/DataGridCustomToolbar';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
-import { DateFormatter } from '../../utils/utils.functions';
-import NormalDataGridComponent from '../../components/NormalDataGridComponent';
+import { DateFormatter } from '../../../utils/utils.functions';
+import NormalDataGridComponent from '../../../components/NormalDataGridComponent';
 
 const Staffs = () => {
   const theme = useTheme();

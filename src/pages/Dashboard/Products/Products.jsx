@@ -6,17 +6,17 @@ import {
   useMediaQuery,
   Stack
 } from "@mui/material";
-import Header from '../../components/Header';
-import { useGQLQuery } from '../../useRequest';
-import { GET_ALL_PRODUCTS } from "../../Query/products";
-import {GET_ALL_CATEGORY} from "../../Query/Category/category.query";
-import { getToken } from "../../utils/token";
+import Header from '../../../components/Header';
+import { useGQLQuery } from '../../../useRequest';
+import { GET_ALL_PRODUCTS } from "../../../Query/products";
+import {GET_ALL_CATEGORY} from "../../../Query/Category/category.query";
+import { getToken } from "../../../utils/token";
 import { useDispatch } from "react-redux";
-import { GetHeader } from "../../utils/getHeader";
+import { GetHeader } from "../../../utils/getHeader";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { DateFormatter } from '../../utils/utils.functions';
-import { setCategory } from '../../state';
+import { DateFormatter } from '../../../utils/utils.functions';
+import { setCategory } from '../../../state';
 import { DataGrid } from '@mui/x-data-grid';
 
 

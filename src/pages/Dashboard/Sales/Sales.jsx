@@ -1,15 +1,15 @@
 import React, { useState,useEffect } from 'react';
-import { useGQLQuery } from '../../useRequest';
-import { GET_ALL_SALES } from '../../Query/Sales/sales.query';
-import { GetHeader } from "../../utils/getHeader";
-import { getToken } from "../../utils/token";
+import { useGQLQuery } from '../../../useRequest';
+import { GET_ALL_SALES } from '../../../Query/Sales/sales.query';
+import { GetHeader } from "../../../utils/getHeader";
+import { getToken } from "../../../utils/token";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { DataGrid } from '@mui/x-data-grid';
-import Header from '../../components/Header';
+import Header from '../../../components/Header';
 import { useTheme } from '@emotion/react';
 import { Box } from '@mui/material';
-import DataGridCustomToolbar from '../../components/DataGridCustomToolbar';
+import DataGridCustomToolbar from '../../../components/DataGridCustomToolbar';
 
 
 const Sales = () => {

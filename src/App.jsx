@@ -13,9 +13,9 @@ import ResetPassword from "./pages/Auth/ResetPassword";
 
 // React Query
 import { getToken } from './utils/token';
-import Products from "./pages/Dashboard/Products";
-import Sales from "./pages/Dashboard/Sales";
-import Staffs from "./pages/Dashboard/Staffs";
+import Products from "./pages/Dashboard/Products/Products";
+import Sales from "./pages/Dashboard/Sales/Sales";
+import Staffs from "./pages/Dashboard/Staffs/Staffs";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
