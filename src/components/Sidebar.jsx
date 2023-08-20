@@ -51,6 +51,10 @@ const NavItems = [
         icon: <AddCardOutlined />
     },
     {
+        text: "Category",
+        icon: <AddCardOutlined />
+    },
+    {
         text: "Sales Details",
         icon: null
     },
@@ -170,7 +174,7 @@ const Sidebar = ({
                                         }}
                                         >
                                             <ListItemIcon
-                                            sx={{ml:"2rem",
+                                            sx={{ml:"1rem",
                                             color:active === lowerText ? theme.palette.primary[600] : theme.palette.secondary[200],
                                         }}
                                             >
