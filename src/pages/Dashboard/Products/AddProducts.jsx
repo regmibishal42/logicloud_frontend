@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { GetHeader } from "../../../utils/getHeader";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { TextField, Button, Select, MenuItem, FormControl, InputLabel, Box, Stack, Divider} from '@mui/material';
 
 import Header from '../../../components/Header';
@@ -12,6 +12,8 @@ import { getToken } from '../../../utils/token';
 import { CREATE_CATEGORY } from '../../../Query/Category/category.mutation';
 import { CREATE_PRODUCT } from '../../../Query/products';
 import { ServerDateFormatter } from '../../../utils/utils.functions';
+import { DELETE_PRODUCT } from '../../../Query/Product/product.mutation';
+import { CreateProductValidator } from '../../../utils/validation/productValidator';
 
 const AddProducts = () => {
     const token = getToken();
@@ -59,14 +61,22 @@ const AddProducts = () => {
     const {data:productMutationData,isLoading:productMutationLoading,mutate:createProductMutation}  = useGQLMutation(CREATE_PRODUCT,header);
     if(productMutationData){
         console.log("Create Product Data",productMutationData)
+        if(productMutationData?.product?.createProduct?.error){
+            console.log("Error Creating Product",productMutationData?.product?.createProduct?.error)
+            toast.error(productMutationData?.product?.createProduct?.error.message)
+        }
+        if(productMutationData?.product?.createProduct?.data){
+            console.log("Product Created Successfully",productMutationData?.product?.createProduct?.data)
+            //toast(`Product created`)
+        }
     }
     const initialProductState = {
         name:"",
         boughtOn:"",
-        units:"",
+        units:0,
         categoryID:"",
-        costPrice:"",
-        sellingPrice:""
+        costPrice:0,
+        sellingPrice:0,
     };
     const [product, setProduct] = useState(initialProductState);
 
@@ -82,16 +92,19 @@ const AddProducts = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        let validationError = CreateProductValidator(product);
+        if(validationError){
+            toast.error(validationError)
+            return
+        }
         // Handle form submission here, e.g., send data to a server
         const formattedDate = ServerDateFormatter(product.boughtOn)
         product.boughtOn = formattedDate
         createProductMutation(product);
         setProduct(initialProductState);
-        console.log("Products From Submit", product);
     };
     const handleCategorySubmit = (event) => {
         event.preventDefault();
-        console.log("Submit Handler Clicked", newCategory.length, newCategory)
         if (newCategory.length > 3) {
             console.log("New Category is", newCategory)
             categoryMutate({ name: newCategory })

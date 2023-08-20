@@ -18,7 +18,7 @@ export const useGQLMutation = (mutation,headers={})=>{
   const graphQLClient = new GraphQLClient(API_URL, headers);
 
   const mutateData = async (input) => {
-    // console.log("The Variables are:",input);
+     console.log("The Variables are:",input);
     const response = await graphQLClient.request(mutation, {input});
     return response;
   };
