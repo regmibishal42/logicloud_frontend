@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { useGQLQuery } from '../../useRequest';
-import { GET_ALL_SALES } from '../../Query/Sales/sales.query';
-import { GetHeader } from "../../utils/getHeader";
-import { getToken } from "../../utils/token";
+import React, { useState,useEffect } from 'react';
+import { useGQLQuery } from '../../../useRequest';
+import { GET_ALL_SALES } from '../../../Query/Sales/sales.query';
+import { GetHeader } from "../../../utils/getHeader";
+import { getToken } from "../../../utils/token";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { DataGrid } from '@mui/x-data-grid';
-import Header from '../../components/Header';
+import Header from '../../../components/Header';
 import { useTheme } from '@emotion/react';
 import { Box } from '@mui/material';
-import DataGridCustomToolbar from '../../components/DataGridCustomToolbar';
+import DataGridCustomToolbar from '../../../components/DataGridCustomToolbar';
 
 
 const Sales = () => {
@@ -22,14 +22,16 @@ const Sales = () => {
  const [searchInput,setSearchInput] = useState("");
   let sales = [];
   let pages = {};
-  const { data: salesData, isLoading: salesDataLoading } = useGQLQuery({
+  const { data: salesData, isLoading: salesDataLoading,refetch } = useGQLQuery({
     key: "sales_data",
     query: GET_ALL_SALES,
     headers: header,
     variables: {
       input: {
         params: {
-          filterType: "YEARLY"
+          filterType: "YEARLY",
+          searchQuery:search,
+
         },
         page: {
           limit: 10,
@@ -41,7 +43,7 @@ const Sales = () => {
 
   })
   if (salesData) {
-    console.log("The Sales Data", salesData);
+   // console.log("The Sales Data", salesData);
     if (salesData?.sales?.getSalesByFilter?.error) {
       console.log("Sales Data Fetching Error", salesData?.sales?.getSalesByFilter?.error)
       toast.error(salesData?.sales?.getSalesByFilter?.error.message)
@@ -92,6 +94,9 @@ const Sales = () => {
     
 
   ];
+  useEffect(() => {
+    refetch(); // Refetch the data whenever the search changes
+  }, [refetch, search]);
 
   return (
     <Box>

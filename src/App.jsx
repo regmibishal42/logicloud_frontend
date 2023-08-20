@@ -13,9 +13,12 @@ import ResetPassword from "./pages/Auth/ResetPassword";
 
 // React Query
 import { getToken } from './utils/token';
-import Products from "./pages/Dashboard/Products";
-import Sales from "./pages/Dashboard/Sales";
-import Staffs from "./pages/Dashboard/Staffs";
+import Products from "./pages/Dashboard/Products/Products";
+import AddProducts from "./pages/Dashboard/Products/AddProducts";
+import Sales from "./pages/Dashboard/Sales/Sales";
+import Staffs from "./pages/Dashboard/Staffs/Staffs";
+import ViewProduct from "./pages/Dashboard/Products/ViewProduct";
+
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -32,6 +35,9 @@ function App() {
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/products" element={<Products />}/>
+              <Route path="/add-products" element={<AddProducts />}/>
+              <Route path="/product/:productID" element={<ViewProduct />}/>
+
               <Route path="/sales" element={<Sales />} />
               <Route path="/staffs" element={<Staffs />} />
             </Route>
