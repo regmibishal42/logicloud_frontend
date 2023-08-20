@@ -21,3 +21,22 @@ export const ServerDateFormatter = (inputDate)=> {
 
   return isoString;
 }
+
+export const CheckSameObjects = (obj1, obj2) =>{
+  console.log("first obj",obj1)
+  console.log("second obj",obj2)
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+
+  for (const key of keys1) {
+    if (obj1[key] !== obj2[key]) {
+      return false;
+    }
+  }
+
+  return true;
+}
