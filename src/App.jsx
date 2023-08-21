@@ -22,6 +22,7 @@ import Category from "./pages/Dashboard/Products/Category";
 import UpdateProducts from "./pages/Dashboard/Products/UpdateProducts";
 import CreateSale from "./pages/Dashboard/Sales/CreateSale";
 import AddStaff from "./pages/Dashboard/Staffs/AddStaff";
+import UpdateStaff from "./pages/Dashboard/Staffs/UpdateStaff";
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
 
               <Route path="/staffs" element={<Staffs />} />
               <Route path="add-staff" element={<AddStaff />} />
+              <Route path="/staffs/update/:staffID" element={<UpdateStaff />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

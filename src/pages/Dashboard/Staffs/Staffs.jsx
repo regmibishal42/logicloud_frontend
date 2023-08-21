@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGQLQuery } from '../../../useRequest';
+import { useGQLMutation, useGQLQuery } from '../../../useRequest';
 import { GET_ALL_STAFFS } from '../../../Query/Staffs/staff.query';
 import { GetHeader } from "../../../utils/getHeader";
 import { getToken } from "../../../utils/token";
@@ -8,15 +8,17 @@ import 'react-toastify/dist/ReactToastify.css';
 import { DataGrid } from '@mui/x-data-grid';
 import Header from '../../../components/Header';
 import { useTheme } from '@emotion/react';
-import { Box, Checkbox, FormControlLabel } from '@mui/material';
+import { Box, Checkbox, FormControlLabel ,Stack,Button} from '@mui/material';
 
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { DateFormatter } from '../../../utils/utils.functions';
 import NormalDataGridComponent from '../../../components/NormalDataGridComponent';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Staffs = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const token = getToken();
   const header = GetHeader(token);
   const [isActive, setIsActive] = useState(true);
@@ -51,6 +53,24 @@ const Staffs = () => {
       staffs = staffsData?.staff?.getStaffByOrganization?.data
     }
     console.log(staffsData)
+  }
+
+  //Delete Staff Mutation todo
+ // const {data:deleteStaffMutationData,isLoading:deleteStaffLoading,mutate} = useGQLMutation(DELE)
+  //Delete Staff Handler
+  const deleteStaffHandler = (rowData) =>{
+    console.log(rowData)
+    const isConfirmed = confirm(`Delete staff ${rowData?.staff?.profile?.firstName}`)
+    if(!isConfirmed){
+      return
+    }
+
+    //refetch()
+  }
+  //Update Staff Handler
+  const updateStaffHandler = (rowData) =>{
+
+    navigate(`/staffs/update/${rowData.staffID}`)
   }
 
   const columns = [
@@ -100,6 +120,22 @@ const Staffs = () => {
       headerName: "DashboardAuthorized",
       flex: 0.7,
       valueGetter: params => params.row.isAuthorized
+    },
+    {
+      field: 'action',
+      headerName: 'Action',
+      width: 180,
+      sortable: false,
+      disableClickEventBubbling: true,
+
+      renderCell: (params) => {
+        return (
+          <Stack direction="row" spacing={2}>
+            <Button variant="outlined" color="warning" size="small" onClick={() => updateStaffHandler(params.row)}>Edit</Button>
+            <Button variant="outlined" color="error" size="small" onClick={() => deleteStaffHandler(params.row)}>Delete</Button>
+          </Stack>
+        );
+      },
     },
 
 
