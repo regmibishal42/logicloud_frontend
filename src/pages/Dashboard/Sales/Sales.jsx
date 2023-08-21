@@ -26,6 +26,8 @@ const Sales = () => {
  const [searchInput,setSearchInput] = useState("");
   let sales = [];
   let pages = {};
+
+  //Get All Sales Data
   const { data: salesData, isLoading: salesDataLoading,refetch } = useGQLQuery({
     key: "sales_data",
     query: GET_ALL_SALES,
@@ -60,6 +62,9 @@ const Sales = () => {
       pages = salesData?.sales?.getSalesByFilter?.pageInfo
     }
   }
+
+  //Sales Delete Mutation
+
   const columns = [
     {
       field:"id",
@@ -105,7 +110,7 @@ const Sales = () => {
         return (
           <Stack direction="row" spacing={2}>
             <Button variant="outlined" color="warning" size="small" onClick={() => {}}>Edit</Button>
-            <Button variant="outlined" color="error" size="small" onClick={() => {}}>Delete</Button>
+            <Button variant="outlined" color="error" size="small" onClick={() => handleDelete(params.row)}>Delete</Button>
           </Stack>
         );
       },
@@ -114,6 +119,13 @@ const Sales = () => {
     
 
   ];
+
+  const handleDelete = (rowDetails) =>{
+    const result = confirm(`Delete ${rowDetails?.product?.name} Sale??`)
+    if(!result){
+
+    }
+  }
   useEffect(() => {
     refetch(); // Refetch the data whenever the search changes
   }, [refetch, search]);

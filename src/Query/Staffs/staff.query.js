@@ -2,9 +2,9 @@ import {gql} from "graphql-tag";
 
 
 export const GET_ALL_STAFFS = gql`
-query getStaffByOrganization{
+query getStaffByOrganization($input:FilterStaffInput!){
   staff{
-    getStaffByOrganization{
+    getStaffByOrganization(input:$input){
       data{
         staffID
         staff{
