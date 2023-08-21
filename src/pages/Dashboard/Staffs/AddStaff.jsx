@@ -3,114 +3,66 @@ import { GetHeader } from "../../../utils/getHeader";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
-import { TextField, Button, Select, MenuItem, FormControl, InputLabel, Box, Stack, Divider} from '@mui/material';
+import { TextField, Button, MenuItem, FormControl, InputLabel, Box, Stack, Divider,Select } from '@mui/material';
 
 import Header from '../../../components/Header';
-import { useGQLQuery, useGQLMutation } from '../../../useRequest';
-import { GET_ALL_CATEGORY } from '../../../Query/Category/category.query';
+import { useGQLMutation } from '../../../useRequest';
 import { getToken } from '../../../utils/token';
-import { CREATE_CATEGORY } from '../../../Query/Category/category.mutation';
-import { CREATE_PRODUCT } from '../../../Query/products';
 import { ServerDateFormatter } from '../../../utils/utils.functions';
-import {  } from '../../../Query/Staffs/staff.query';
-import { CreateProductValidator } from '../../../utils/validation/productValidator';
+import { } from '../../../Query/Staffs/staff.query';
+
+import { CreateStaffValidator } from '../../../utils/validation/satffValidator';
 
 const AddStaff = () => {
     const token = getToken();
     const header = GetHeader(token);
-    const [newCategory, setNewCategory] = useState("");
-    let categories = useSelector((state) => state.global.category) || []
-    if (categories.length < 1) {
-        //get categories from the query
-        const { data: categoriesData, isLoading: categoryLoading } = useGQLQuery({
-            key: "all_category",
-            query: GET_ALL_CATEGORY,
-            headers: header
-        });
-        if (categoriesData) {
-            if (categoriesData?.product?.category?.getAllCategory?.error) {
-                console.log("Cannot get Category(React-Query)", categoriesData?.product?.category?.getAllCategory?.error.message)
-                toast.error(categoriesData?.product?.category?.getAllCategory?.error.message)
-            }
-            if (categoriesData?.product?.category?.getAllCategory?.data) {
-                categories = categoriesData?.product?.category?.getAllCategory?.data
-            }
+    const [staffData, setStaffData] = useState({
+        contactNumber: "",
+        email: "",
+        firstName: "",
+        lastName: "",
+        post: "",
+        joinedOn: "",
+        isAuthorized: false,
+        salary: 0,
+        address: {
+            City: "",
+            District: "",
+            State: "",
         }
-    }
-    //category mutation
-    const { mutate: categoryMutate, isLoading: categoryMutationLoading, data: categoryMutationData } = useGQLMutation(CREATE_CATEGORY, header);
-    if (categoryMutationData) {
-        if (categoryMutationData?.product?.category?.createCategory?.error) {
-            console.log("React-Query Cannot Create Category", categoryMutationData?.product?.category?.createCategory.error.message)
-            toast.error(categoryMutationData?.product?.category?.createCategory.error.message)
+    });
+
+    const handleInputChange = (field, value) => {
+        // Handle nested fields (address) by splitting the field path
+        if (field.includes(".")) {
+            const [outerField, innerField] = field.split(".");
+            setStaffData(prevData => ({
+                ...prevData,
+                [outerField]: {
+                    ...prevData[outerField],
+                    [innerField]: value,
+                },
+            }));
+        } else {
+            setStaffData(prevData => ({
+                ...prevData,
+                [field]: value,
+            }));
         }
-        if (categoryMutationData?.product?.category?.createCategory?.data) {
-            console.log("Category Created", categoryMutationData?.product?.category?.createCategory?.data)
-            if (categories.indexOf(categoryMutationData?.product?.category?.createCategory?.data) < 0) {
-                categories.push({
-                    id: categoryMutationData?.product?.category?.createCategory?.data.id,
-                    name: categoryMutationData?.product?.category?.createCategory?.data.name
-                })
-            }
-        }
-
-    }
-
-
-    // Add Product Mutation
-    const {data:productMutationData,isLoading:productMutationLoading,mutate:createProductMutation}  = useGQLMutation(CREATE_PRODUCT,header);
-    if(productMutationData){
-        console.log("Create Product Data",productMutationData)
-        if(productMutationData?.product?.createProduct?.error){
-            console.log("Error Creating Product",productMutationData?.product?.createProduct?.error)
-            toast.error(productMutationData?.product?.createProduct?.error.message)
-        }
-        if(productMutationData?.product?.createProduct?.data){
-            console.log("Product Created Successfully",productMutationData?.product?.createProduct?.data)
-            //toast(`Product created`)
-        }
-    }
-    const initialProductState = {
-        name:"",
-        boughtOn:"",
-        units:0,
-        categoryID:"",
-        costPrice:0,
-        sellingPrice:0,
-    };
-    const [product, setProduct] = useState(initialProductState);
-
-    const handleInputChange = (event) => {
-
-        const { name, value } = event.target;
-        console.log(name,value)
-        setProduct((prevProduct) => ({
-            ...prevProduct,
-            [name]: value,
-        }));
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        let validationError = CreateProductValidator(product);
-        if(validationError){
+        let validationError = CreateStaffValidator(staffData);
+        if (validationError) {
             toast.error(validationError)
             return
         }
         // Handle form submission here, e.g., send data to a server
-        const formattedDate = ServerDateFormatter(product.boughtOn)
-        product.boughtOn = formattedDate
-        createProductMutation(product);
-        setProduct(initialProductState);
+        const formattedDate = ServerDateFormatter(staffData.joinedOn)
+        staffData.joinedOn = formattedDate
+        console.log("Submitted Data", staffData)
     };
-    const handleCategorySubmit = (event) => {
-        event.preventDefault();
-        if (newCategory.length > 3) {
-            console.log("New Category is", newCategory)
-            categoryMutate({ name: newCategory })
-        }
-        setNewCategory("");
-    }
 
     return (
         <Box m="1.5rem 2.5rem">
@@ -126,10 +78,10 @@ const AddStaff = () => {
                 pauseOnHover
                 theme="light"
             />
-            <Header title="Add Products" subtitle="add new product from here" />
+            <Header title="Add Staff" subtitle="add new staff from here" />
             <Divider sx={{ borderColor: 'grey' }} />
             <Box height="80vh" sx={{ mt: "2rem" }} display="flex" justifyContent="flex-start" gap={5} width="100%">
-                {/* Add Products Form */}
+                {/* Add Staff Form */}
                 <FormControl component="form" onSubmit={handleSubmit} sx={{
                     display: "flex",
                     flexDirection: "column",
@@ -141,89 +93,107 @@ const AddStaff = () => {
                     <Stack spacing={2}>
                         <Stack direction="row" spacing={2}>
                             <TextField
-                                label="Product Name"
-                                name="name"
-                                value={product.name}
-                                onChange={handleInputChange}
+                                label="First Name"
+                                name="firstName"
+                                value={staffData.firstName}
+                                onChange={(e) => handleInputChange("firstName", e.target.value)}
                                 required
                                 sx={{ width: "50%" }}
                             />
-                            <FormControl sx={{ minWidth: "50%" }}>
-                                <InputLabel>Category</InputLabel>
+                            <TextField
+                                label="Last Name"
+                                name="lastName"
+                                value={staffData.lastName}
+                                onChange={(e) => handleInputChange("lastName", e.target.value)}
+                                required
+                                sx={{ width: "50%" }}
+                            />
+                        </Stack>
+                    </Stack>
+                    <TextField
+                        label="Contact Number"
+                        type="phone"
+                        name="contactNumber"
+                        value={staffData.contactNumber}
+                        onChange={(e) => handleInputChange("contactNumber", e.target.value)}
+                        required
+                    />
+                    <TextField
+                        label="email"
+                        type="email"
+                        name="email"
+                        value={staffData.email}
+                        onChange={(e) => handleInputChange("email", e.target.value)}
+                        required
+                    />
+                    <TextField
+                        label="Post"
+                        type="text"
+                        name="post"
+                        value={staffData.post}
+                        onChange={(e) => handleInputChange("post", e.target.value)}
+                        required
+                    />
+                    <TextField
+                        label="Salary"
+                        type="number"
+                        name="salary"
+                        value={staffData.post}
+                        onChange={(e) => handleInputChange("salary", e.target.value)}
+                        required
+                    />
+                    <Stack spacing={2}>
+                        <Stack direction="row" spacing={2}>
+                            <TextField
+                                label="City"
+                                name="City"
+                                value={staffData.address.City}
+                                onChange={(e) => handleInputChange("address.City", e.target.value)}
+                                required
+                                sx={{ width: "50%" }}
+                            />
+                            <TextField
+                                label="District"
+                                name="District"
+                                value={staffData.address.District}
+                                onChange={(e) => handleInputChange("address.District", e.target.value)}
+                                required
+                                sx={{ width: "50%" }}
+                            />
+                            <FormControl sx={{ minWidth: "35%" }}>
+                                <InputLabel>State</InputLabel>
                                 <Select
-                                    name="categoryID"
-                                    value={product.categoryID}
-                                    onChange={handleInputChange}
+                                    name="state"
+                                    value={staffData.address.State}
+                                    onChange={(e) => handleInputChange("address.District", e.target.value)}
                                     required
                                     sx={{ width: '100%' }} // Adjust the width as needed
                                 >
-                                    {categories && categories.map((category) =>
-                                        <MenuItem value={category.id} key={category.id}>{category.name}</MenuItem>
-                                    )}
+                                    <MenuItem value="Koshi">Koshi</MenuItem>
+                                    <MenuItem value="Madhesh">Madhesh</MenuItem>
+                                    <MenuItem value="Bagmati">Bagmati</MenuItem>
+                                    <MenuItem value="Gandaki">Gandaki</MenuItem>
+                                    <MenuItem value="Lumbani">Lumbani</MenuItem>
+                                    <MenuItem value="Karnali">Karnali</MenuItem>
+                                    <MenuItem value="Sudur Pachim">Sudur Pachim</MenuItem>
                                 </Select>
                             </FormControl>
                         </Stack>
                     </Stack>
                     <TextField
-                        label="Cost Price"
-                        type="number"
-                        name="costPrice"
-                        value={product.costPrice}
-                        onChange={handleInputChange}
-                        required
-                    />
-                    <TextField
-                        label="Selling Price"
-                        type="number"
-                        name="sellingPrice"
-                        value={product.sellingPrice}
-                        onChange={handleInputChange}
-                        required
-                    />
-                    <TextField
-                        label="Units"
-                        type="number"
-                        name="units"
-                        value={product.units}
-                        onChange={handleInputChange}
-                        required
-                    />
-                    <TextField
-                        label="Product Bought On"
+                        label="Joined On"
                         type="date"
-                        name="boughtOn"
-                        value={product.boughtOn}
-                        onChange={handleInputChange}
+                        name="joinedOn"
+                        value={staffData.joinedOn}
+                        onChange={(e) => handleInputChange("joinedOn", e.target.value)}
                         required
                         InputLabelProps={{
                             shrink: true,
                         }}
                     />
                     <Button type="submit" variant="contained" color="primary" sx={{ mt: "16px" }}>
-                        Add Product
+                        Add Staff
                     </Button>
-                </FormControl>
-                {/* Add Category Form Control */}
-                <FormControl component="form" onSubmit={handleCategorySubmit}>
-                    <Stack spacing="2">
-                        <Stack direction="row" spacing="4">
-                            <TextField
-                                label="Add Category"
-                                type="text"
-                                name="New Category"
-                                value={newCategory}
-                                onChange={(e) => setNewCategory(e.target.value)}
-                                required
-                                // InputLabelProps={{
-                                //     shrink: true,
-                                // }}
-                                sx={{ marginRight: "10px" }}
-                            />
-                            <Button type="submit" variant="contained" color="primary" sx={{ mt: "16px" }}>
-                                Add Category
-                            </Button>
-                        </Stack>
-                    </Stack>
                 </FormControl>
             </Box>
         </Box>
