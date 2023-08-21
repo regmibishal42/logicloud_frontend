@@ -3,19 +3,20 @@ import { GetHeader } from "../../../utils/getHeader";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
-import { TextField, Button, MenuItem, FormControl, InputLabel, Box, Stack, Divider,Select } from '@mui/material';
+import { TextField, Button, MenuItem, FormControl, InputLabel, Box, Stack, Divider, Select,Checkbox ,FormControlLabel} from '@mui/material';
 
 import Header from '../../../components/Header';
 import { useGQLMutation } from '../../../useRequest';
 import { getToken } from '../../../utils/token';
 import { ServerDateFormatter } from '../../../utils/utils.functions';
-import { } from '../../../Query/Staffs/staff.query';
+import { CREATE_STAFF } from '../../../Query/Staffs/satff.mutation';
 
 import { CreateStaffValidator } from '../../../utils/validation/satffValidator';
 
 const AddStaff = () => {
     const token = getToken();
     const header = GetHeader(token);
+    const [isAuthorized, setIsAuthorized] = useState(false)
     const [staffData, setStaffData] = useState({
         contactNumber: "",
         email: "",
@@ -23,7 +24,7 @@ const AddStaff = () => {
         lastName: "",
         post: "",
         joinedOn: "",
-        isAuthorized: false,
+        isAuthorized: isAuthorized,
         salary: 0,
         address: {
             City: "",
@@ -31,6 +32,18 @@ const AddStaff = () => {
             State: "",
         }
     });
+    //create staff mutation
+    const { data: staffMutateData, isLoading: staffDataLoading, mutate } = useGQLMutation(CREATE_STAFF, header);
+    if (staffMutateData) {
+        if (staffMutateData?.staff?.createStaff?.error) {
+            console.log("Create Staff Query Error", staffMutateData?.staff?.createStaff?.error.message)
+            toast.error(staffMutateData?.staff?.createStaff?.error.message)
+        }
+        if (staffMutateData?.staff?.createStaff?.data) {
+            console.log("Staff Created with", staffMutateData?.staff?.createStaff?.data)
+            toast("staff created")
+        }
+    }
 
     const handleInputChange = (field, value) => {
         // Handle nested fields (address) by splitting the field path
@@ -62,6 +75,22 @@ const AddStaff = () => {
         const formattedDate = ServerDateFormatter(staffData.joinedOn)
         staffData.joinedOn = formattedDate
         console.log("Submitted Data", staffData)
+        mutate(staffData)
+        setStaffData({
+            contactNumber: "",
+            email: "",
+            firstName: "",
+            lastName: "",
+            post: "",
+            joinedOn: "",
+            isAuthorized: isAuthorized,
+            salary: 0,
+            address: {
+                City: "",
+                District: "",
+                State: "",
+            }
+        })
     };
 
     return (
@@ -138,7 +167,7 @@ const AddStaff = () => {
                         label="Salary"
                         type="number"
                         name="salary"
-                        value={staffData.post}
+                        value={staffData.salary}
                         onChange={(e) => handleInputChange("salary", e.target.value)}
                         required
                     />
@@ -165,7 +194,7 @@ const AddStaff = () => {
                                 <Select
                                     name="state"
                                     value={staffData.address.State}
-                                    onChange={(e) => handleInputChange("address.District", e.target.value)}
+                                    onChange={(e) => handleInputChange("address.State", e.target.value)}
                                     required
                                     sx={{ width: '100%' }} // Adjust the width as needed
                                 >
@@ -190,6 +219,11 @@ const AddStaff = () => {
                         InputLabelProps={{
                             shrink: true,
                         }}
+                    />
+                    <FormControlLabel
+                        control={<Checkbox value={isAuthorized} color="primary" onChange={(e) => {setIsAuthorized(!isAuthorized);handleInputChange("isAuthorized",isAuthorized)}} />}
+                        label="Allow Dashboard Access?"
+                        defaultChecked={false}
                     />
                     <Button type="submit" variant="contained" color="primary" sx={{ mt: "16px" }}>
                         Add Staff

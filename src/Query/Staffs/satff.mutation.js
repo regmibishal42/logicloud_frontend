@@ -19,6 +19,6 @@ mutation createStaff($input: CreateStaffInput!){
 `;
 
 
-export const UPDATE_STAFF = gql``;
+// export const UPDATE_STAFF = gql``;
 
-export const DELETE_STAFF = gql``;
+// export const DELETE_STAFF = gql``;
