@@ -113,7 +113,7 @@ const Products = () => {
   }
   const viewClickHandler = (rowClicked) => {
     console.log("View Button Clicked")
-    navigate(`/product/${rowClicked}`)
+    navigate(`/create-sale/${rowClicked}`)
   }
   const columns = [
     {
@@ -183,7 +183,7 @@ const Products = () => {
       renderCell: (params) => {
         return (
           <Stack direction="row" spacing={2}>
-            <Button variant="outlined" color="warning" size="small" onClick={() => viewClickHandler(params.row.id)}>View Details</Button>
+            <Button variant="outlined" color="warning" size="small" onClick={() => viewClickHandler(params.row.id)}>Sell</Button>
           </Stack>
         );
       },
