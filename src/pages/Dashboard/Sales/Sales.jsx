@@ -10,6 +10,10 @@ import Header from '../../../components/Header';
 import { useTheme } from '@emotion/react';
 import { Box } from '@mui/material';
 import DataGridCustomToolbar from '../../../components/DataGridCustomToolbar';
+import {
+  Stack,
+  Button
+} from "@mui/material"
 
 
 const Sales = () => {
@@ -89,6 +93,22 @@ const Sales = () => {
       headerName:"SoldBy",
       flex:1,
       valueGetter:params => params.row.soldBy.email
+    },
+    {
+      field: 'action',
+      headerName: 'Action',
+      width: 180,
+      sortable: false,
+      disableClickEventBubbling: true,
+
+      renderCell: (params) => {
+        return (
+          <Stack direction="row" spacing={2}>
+            <Button variant="outlined" color="warning" size="small" onClick={() => {}}>Edit</Button>
+            <Button variant="outlined" color="error" size="small" onClick={() => {}}>Delete</Button>
+          </Stack>
+        );
+      },
     },
     
     
