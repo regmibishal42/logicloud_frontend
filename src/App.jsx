@@ -20,6 +20,9 @@ import Staffs from "./pages/Dashboard/Staffs/Staffs";
 import ViewProduct from "./pages/Dashboard/Products/ViewProduct";
 import Category from "./pages/Dashboard/Products/Category";
 import UpdateProducts from "./pages/Dashboard/Products/UpdateProducts";
+import CreateSale from "./pages/Dashboard/Sales/CreateSale";
+import AddStaff from "./pages/Dashboard/Staffs/AddStaff";
+import UpdateStaff from "./pages/Dashboard/Staffs/UpdateStaff";
 
 
 function App() {
@@ -41,8 +44,13 @@ function App() {
               <Route path="/product/:productID" element={<ViewProduct />}/>
               <Route path="/product/update/:productID" element={<UpdateProducts />} />
               <Route path="/category" element={<Category />} />
+
               <Route path="/sales" element={<Sales />} />
+              <Route path="create-sale/:productID" element={<CreateSale />} />
+
               <Route path="/staffs" element={<Staffs />} />
+              <Route path="add-staff" element={<AddStaff />} />
+              <Route path="/staffs/update/:staffID" element={<UpdateStaff />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

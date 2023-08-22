@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -20,6 +20,7 @@ import { setCategory } from '../../../state';
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import {DELETE_PRODUCT} from "../../../Query/Product/product.mutation";
+import DataGridCustomToolbar from '../../../components/DataGridCustomToolbar';
 
 
 const Products = () => {
@@ -29,19 +30,23 @@ const Products = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [search,setSearch] = useState("");
+ const [searchInput,setSearchInput] = useState("");
   const [page, setPage] = useState(1);
   const [deleteID,setDeleteID] = useState("");
   let products = [];
   let pages = {}
 
   //products query
-  const { data: productsData, error: productsError, isLoading: ProductsLoading } = useGQLQuery({
+  const { data: productsData, error: productsError, isLoading: ProductsLoading ,refetch} = useGQLQuery({
     key: "all_products",
     query: GET_ALL_PRODUCTS,
     headers: header,
     variables: {
       input: {
-        params: {},
+        params: {
+          searchQuery:search
+        },
         page: {
           limit: 10,
           sort: "ASC",
@@ -113,7 +118,7 @@ const Products = () => {
   }
   const viewClickHandler = (rowClicked) => {
     console.log("View Button Clicked")
-    navigate(`/product/${rowClicked}`)
+    navigate(`/create-sale/${rowClicked}`)
   }
   const columns = [
     {
@@ -183,7 +188,7 @@ const Products = () => {
       renderCell: (params) => {
         return (
           <Stack direction="row" spacing={2}>
-            <Button variant="outlined" color="warning" size="small" onClick={() => viewClickHandler(params.row.id)}>View Details</Button>
+            <Button variant="outlined" color="warning" size="small" onClick={() => viewClickHandler(params.row.id)}>Sell</Button>
           </Stack>
         );
       },
@@ -192,7 +197,12 @@ const Products = () => {
 
 
 
-  ]; return (
+  ];
+  useEffect(()=>{
+    console.log("Refetching data")
+    refetch();
+  },[refetch,search])
+  return (
     <Box m="1.5rem 2.5rem">
       <ToastContainer
         position="top-right"
@@ -234,7 +244,7 @@ const Products = () => {
         }}>
 
         <DataGrid
-          loading={ProductsLoading || !products}
+          loading={ProductsLoading || !productsData}
           getRowId={(row) => row.id}
           rows={(products) || []}
           columns={columns}
@@ -245,6 +255,12 @@ const Products = () => {
           paginationMode='server'
           sortingMode='server'
           onPageChange={(newPage) => setPage(newPage)}
+          components={{Toolbar:DataGridCustomToolbar}}
+          componentsProps={{
+           toolbar:{
+             searchInput,setSearchInput,setSearch
+           }
+          }}
         // onPageSizeChnage
         />
       </Box>

@@ -10,6 +10,10 @@ import Header from '../../../components/Header';
 import { useTheme } from '@emotion/react';
 import { Box } from '@mui/material';
 import DataGridCustomToolbar from '../../../components/DataGridCustomToolbar';
+import {
+  Stack,
+  Button
+} from "@mui/material"
 
 
 const Sales = () => {
@@ -22,6 +26,8 @@ const Sales = () => {
  const [searchInput,setSearchInput] = useState("");
   let sales = [];
   let pages = {};
+
+  //Get All Sales Data
   const { data: salesData, isLoading: salesDataLoading,refetch } = useGQLQuery({
     key: "sales_data",
     query: GET_ALL_SALES,
@@ -56,6 +62,9 @@ const Sales = () => {
       pages = salesData?.sales?.getSalesByFilter?.pageInfo
     }
   }
+
+  //Sales Delete Mutation
+
   const columns = [
     {
       field:"id",
@@ -90,10 +99,33 @@ const Sales = () => {
       flex:1,
       valueGetter:params => params.row.soldBy.email
     },
+    {
+      field: 'action',
+      headerName: 'Action',
+      width: 180,
+      sortable: false,
+      disableClickEventBubbling: true,
+
+      renderCell: (params) => {
+        return (
+          <Stack direction="row" spacing={2}>
+            <Button variant="outlined" color="warning" size="small" onClick={() => {}}>Edit</Button>
+            <Button variant="outlined" color="error" size="small" onClick={() => handleDelete(params.row)}>Delete</Button>
+          </Stack>
+        );
+      },
+    },
     
     
 
   ];
+
+  const handleDelete = (rowDetails) =>{
+    const result = confirm(`Delete ${rowDetails?.product?.name} Sale??`)
+    if(!result){
+
+    }
+  }
   useEffect(() => {
     refetch(); // Refetch the data whenever the search changes
   }, [refetch, search]);

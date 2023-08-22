@@ -87,7 +87,7 @@ const NavItems = [
         icon: <BadgeOutlined />
     },
     {
-        text: "Add-Staffs",
+        text: "Add-Staff",
         icon: <AddCardOutlined />
     },
     {
