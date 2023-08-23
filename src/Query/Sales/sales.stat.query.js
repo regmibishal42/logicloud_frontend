@@ -26,3 +26,21 @@ query getSalesStat($input: SalesStatInput!){
   }
 }
 `;
+
+export const DAILY_SALES_STAT = gql`
+query getDailySalesStat{
+ sales{
+  getDailySalesStat{
+    data{
+      date
+      totalSales
+      totalUnits
+    }
+    error{
+      message
+      code
+    }
+  }
+}
+}
+`;
