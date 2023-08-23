@@ -23,6 +23,7 @@ import UpdateProducts from "./pages/Dashboard/Products/UpdateProducts";
 import CreateSale from "./pages/Dashboard/Sales/CreateSale";
 import AddStaff from "./pages/Dashboard/Staffs/AddStaff";
 import UpdateStaff from "./pages/Dashboard/Staffs/UpdateStaff";
+import Overview from "./pages/Dashboard/Overview/Overview";
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
 
               <Route path="/sales" element={<Sales />} />
               <Route path="create-sale/:productID" element={<CreateSale />} />
+              <Route path="/overview" element={<Overview />} />
 
               <Route path="/staffs" element={<Staffs />} />
               <Route path="add-staff" element={<AddStaff />} />
