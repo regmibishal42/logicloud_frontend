@@ -26,6 +26,7 @@ import UpdateStaff from "./pages/Dashboard/Staffs/UpdateStaff";
 import Overview from "./pages/Dashboard/Overview/Overview";
 import Daily from "./pages/Dashboard/Daily/Daily";
 import Monthly from "./pages/Dashboard/Monthly/Monthly";
+import Breakdown from "./pages/Dashboard/BreakDown/Breakdown";
 
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
               <Route path="/overview" element={<Overview />} />
               <Route path="/daily" element={<Daily />} />
               <Route path="/monthly" element={<Monthly />} />
+              <Route path="/breakdown" element={<Breakdown />} />
 
               <Route path="/staffs" element={<Staffs />} />
               <Route path="add-staff" element={<AddStaff />} />

@@ -44,3 +44,20 @@ query getDailySalesStat{
 }
 }
 `;
+
+export const SALES_BREAKDOWN = gql`
+query getSalesBreakdown($input:SalesBreakDownInput!){
+ sales{
+  getSalesBreakdown(input:$input){
+    data{
+      categoryName
+      totalSales
+    }
+    error{
+      message
+      code
+    }
+  }
+}
+}
+`;
