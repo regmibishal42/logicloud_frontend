@@ -61,3 +61,21 @@ query getSalesBreakdown($input:SalesBreakDownInput!){
 }
 }
 `;
+
+export const SALES_BY_STAFF = gql`
+query getSalesByStaff($input: SalesBreakDownInput!){
+  sales{
+    getSalesByStaff(input:$input){
+      data{
+        staffName
+        totalSales
+        totalUnits
+      }
+      error{
+        message
+        code
+      }
+    }
+}
+}
+`;

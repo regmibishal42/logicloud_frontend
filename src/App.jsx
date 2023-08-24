@@ -27,6 +27,7 @@ import Overview from "./pages/Dashboard/Overview/Overview";
 import Daily from "./pages/Dashboard/Daily/Daily";
 import Monthly from "./pages/Dashboard/Monthly/Monthly";
 import Breakdown from "./pages/Dashboard/BreakDown/Breakdown";
+import Performance from "./pages/Dashboard/Performance/Performance";
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
               <Route path="/staffs" element={<Staffs />} />
               <Route path="add-staff" element={<AddStaff />} />
               <Route path="/staffs/update/:staffID" element={<UpdateStaff />} />
+              <Route path="/performance" element={<Performance />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

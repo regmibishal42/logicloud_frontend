@@ -128,7 +128,7 @@ const AddProducts = () => {
             />
             <Header title="Add Products" subtitle="add new product from here" />
             <Divider sx={{ borderColor: 'grey' }} />
-            <Box height="80vh" sx={{ mt: "2rem" }} display="flex" justifyContent="flex-start" gap={5} width="100%">
+            <Box height="75vh" sx={{ mt: "2rem" }} display="flex" justifyContent="flex-start" gap={5} width="100%">
                 {/* Add Products Form */}
                 <FormControl component="form" onSubmit={handleSubmit} sx={{
                     display: "flex",
