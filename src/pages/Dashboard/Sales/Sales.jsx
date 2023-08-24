@@ -16,7 +16,7 @@ import {
 } from "@mui/material"
 
 
-const Sales = () => {
+const Sales = ({isDashboard=false}) => {
   const theme = useTheme();
   const token = getToken();
   const header = GetHeader(token);
@@ -144,8 +144,9 @@ const Sales = () => {
         pauseOnHover
         theme="light"
       />
-      <Header title="Sales" subtitle="The entire list of transactions"/>
+      <Header title="Sales" subtitle={!isDashboard ? "The entire list of transactions" : ""}/>
       <Box height = "80vh"
+      minWidth={!isDashboard ? undefined : "50%"}
       sx={{
         "& .MuiDataGrid-root": {
           border: "none",
@@ -184,8 +185,8 @@ const Sales = () => {
         sortingMode='server'
         onPageChange = {(newPage)=>setPage(newPage)}
        // onPageSizeChange
-       components={{Toolbar:DataGridCustomToolbar}}
-       componentsProps={{
+       components={!isDashboard && {Toolbar:DataGridCustomToolbar}}
+       componentsProps={ !isDashboard && {
         toolbar:{
           searchInput,setSearchInput,setSearch
         }

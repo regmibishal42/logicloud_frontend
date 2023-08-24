@@ -109,7 +109,7 @@ const AddStaff = () => {
             />
             <Header title="Add Staff" subtitle="add new staff from here" />
             <Divider sx={{ borderColor: 'grey' }} />
-            <Box height="80vh" sx={{ mt: "2rem" }} display="flex" justifyContent="flex-start" gap={5} width="100%">
+            <Box height="75vh" sx={{ mt: "2rem" }} display="flex" justifyContent="flex-start" gap={5} width="100%">
                 {/* Add Staff Form */}
                 <FormControl component="form" onSubmit={handleSubmit} sx={{
                     display: "flex",
