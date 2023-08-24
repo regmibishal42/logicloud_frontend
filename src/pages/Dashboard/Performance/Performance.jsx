@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import Header from '../../../components/Header';
-import { Box, useTheme } from "@mui/material";
+import { Box, useTheme,FormControl,InputLabel,Select,MenuItem, Stack } from "@mui/material";
 import { useGQLQuery } from '../../../useRequest';
 import { SALES_BY_STAFF } from "../../../Query/Sales/sales.stat.query";
 import { getToken } from "../../../utils/token";
@@ -18,7 +18,7 @@ const Performance = () => {
     const theme = useTheme();
     let formattedData = [];
     //fetch staffs sales data from the server
-    const { data, isLoading } = useGQLQuery({
+    const { data, isLoading,refetch } = useGQLQuery({
         key: "sales_by_staff",
         query: SALES_BY_STAFF,
         headers: header,
@@ -55,6 +55,10 @@ const Performance = () => {
             flex: 0.6,
         },
     ];
+    useEffect(()=>{
+        console.log("Refetching Data")
+        refetch();
+    },[filterType])
     return <Box m="1.5rem 2.5rem">
         <ToastContainer
             position="top-right"
@@ -70,7 +74,25 @@ const Performance = () => {
         />
 
         {user && user.userType === "ADMIN" ? (<Box>
+            <Stack direction="row" gap={5}>
             <Header title="Staff Performance" subtitle="List of staff sales" />
+            <FormControl sx={{ minWidth: "30%",mt:"0.5rem"}}>
+                    <InputLabel>Data Filter Type</InputLabel>
+                    <Select
+                        name="filterType"
+                        value={filterType}
+                        onChange={(e) => setFilterType(e.target.value)}
+                        required
+                        sx={{ width: '50%', mt: "5px" }} // Adjust the width as needed
+                    >
+                        <MenuItem value={"YEARLY"}>YEARLY</MenuItem>
+                        <MenuItem value={"MONTHLY"}>MONTHLY</MenuItem>
+                        <MenuItem value={"WEEKLY"}>WEEKLY</MenuItem>
+                        <MenuItem value={"DAILY"}>DAILY</MenuItem>
+
+                    </Select>
+                </FormControl>
+            </Stack>
             <Box height="80vh"
                 sx={{
                     "& .MuiDataGrid-root": {
@@ -106,7 +128,7 @@ const Performance = () => {
                 />
             </Box>
         </Box>) : (<Box>
-            <Header title="not authorized" subtitle="you are not authorized to access this information"/>
+            <Header title="not authorized" subtitle="you are not authorized to access this information" />
         </Box>)}
     </Box>
 }
