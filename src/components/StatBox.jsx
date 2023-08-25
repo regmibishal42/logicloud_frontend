@@ -23,7 +23,7 @@ const StatBox = ({title,value,increase,icon,description}) => {
         {icon}
         </FlexBetween>
         <Typography variant="h3" fontWeight="600" sx={{color:theme.palette.secondary[200]}}>
-            {value}
+        रु.{value}
         </Typography>
         <FlexBetween>
         <Typography variant="h5" fontStyle="italic" sx={{color:theme.palette.secondary[200]}}>

@@ -9,6 +9,7 @@ import { GetHeader } from "../../../utils/getHeader";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { DataGrid } from '@mui/x-data-grid';
+import NormalDataGridComponent from '../../../components/NormalDataGridComponent';
 
 const Performance = () => {
     const user = useSelector((state) => state.global.user);
@@ -74,7 +75,7 @@ const Performance = () => {
         />
 
         {user && user.userType === "ADMIN" ? (<Box>
-            <Stack direction="row" gap={5}>
+            <Stack direction="row" display="flex" justifyContent="space-between">
             <Header title="Staff Performance" subtitle="List of staff sales" />
             <FormControl sx={{ minWidth: "30%",mt:"0.5rem"}}>
                     <InputLabel>Data Filter Type</InputLabel>
@@ -124,7 +125,7 @@ const Performance = () => {
                     rows={(formattedData) || []}
                     getRowId={(row) => row.staffName}
                     loading={isLoading || !formattedData}
-                // components={{ Toolbar: NormalDataGridComponent }}
+                 components={{ Toolbar: NormalDataGridComponent}}
                 />
             </Box>
         </Box>) : (<Box>

@@ -128,6 +128,10 @@ const AddStaff = () => {
                                 onChange={(e) => handleInputChange("firstName", e.target.value)}
                                 required
                                 sx={{ width: "50%" }}
+                                inputProps={{
+                                    minLength: 3, // Minimum character length
+                                    maxLength: 10, // Maximum character length
+                                  }}
                             />
                             <TextField
                                 label="Last Name"
@@ -136,6 +140,10 @@ const AddStaff = () => {
                                 onChange={(e) => handleInputChange("lastName", e.target.value)}
                                 required
                                 sx={{ width: "50%" }}
+                                inputProps={{
+                                    minLength: 3, // Minimum character length
+                                    maxLength: 10, // Maximum character length
+                                  }}
                             />
                         </Stack>
                     </Stack>
@@ -144,6 +152,10 @@ const AddStaff = () => {
                         type="phone"
                         name="contactNumber"
                         value={staffData.contactNumber}
+                        inputProps={{
+                            minLength: 10, // Minimum character length
+                            maxLength: 10, // Maximum character length
+                          }}
                         onChange={(e) => handleInputChange("contactNumber", e.target.value)}
                         required
                     />
@@ -151,6 +163,10 @@ const AddStaff = () => {
                         label="email"
                         type="email"
                         name="email"
+                        inputProps={{
+                            minLength: 5, // Minimum character length
+                            maxLength: 25, // Maximum character length
+                          }}
                         value={staffData.email}
                         onChange={(e) => handleInputChange("email", e.target.value)}
                         required
@@ -159,6 +175,10 @@ const AddStaff = () => {
                         label="Post"
                         type="text"
                         name="post"
+                        inputProps={{
+                            minLength: 3, // Minimum character length
+                            maxLength: 15, // Maximum character length
+                          }}
                         value={staffData.post}
                         onChange={(e) => handleInputChange("post", e.target.value)}
                         required
@@ -176,6 +196,10 @@ const AddStaff = () => {
                             <TextField
                                 label="City"
                                 name="City"
+                                inputProps={{
+                                    minLength: 3, // Minimum character length
+                                    maxLength: 15, // Maximum character length
+                                  }}
                                 value={staffData.address.City}
                                 onChange={(e) => handleInputChange("address.City", e.target.value)}
                                 required
@@ -184,6 +208,10 @@ const AddStaff = () => {
                             <TextField
                                 label="District"
                                 name="District"
+                                inputProps={{
+                                    minLength: 3, // Minimum character length
+                                    maxLength: 15, // Maximum character length
+                                  }}
                                 value={staffData.address.District}
                                 onChange={(e) => handleInputChange("address.District", e.target.value)}
                                 required
