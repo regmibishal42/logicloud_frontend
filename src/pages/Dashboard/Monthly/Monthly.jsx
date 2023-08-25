@@ -31,6 +31,9 @@ const Monthly = () => {
         }
         if(salesDataFromServer?.sales?.getSalesStat?.data){
             monthlyData = salesDataFromServer?.sales?.getSalesStat?.data?.monthlyData
+            if(monthlyData == null){
+              monthlyData = []
+            }
         }
       }
     //formatted data for charts

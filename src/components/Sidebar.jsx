@@ -27,6 +27,10 @@ import {
     SettingsOutlined,
     BadgeOutlined,
     AddCardOutlined,
+    AccountCircleOutlined,
+    CorporateFareOutlined,
+    PasswordOutlined,
+    VerifiedOutlined
 
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -91,17 +95,26 @@ const NavItems = [
         icon: <AddCardOutlined />
     },
     {
-        text: "Management",
-        icon: null
-    },
-    {
-        text: "Admin",
-        icon: <AdminPanelSettingsOutlined />
-    },
-    {
         text: "Performance",
         icon: <TrendingUpOutlined />
     },
+    {
+        text: "Account",
+        icon: null
+    },
+    {
+        text: "Profile",
+        icon: <AdminPanelSettingsOutlined />
+    },
+    {
+        text: "Organization",
+        icon: <CorporateFareOutlined />
+    },
+    {
+        text: "Update-Password",
+        icon: <PasswordOutlined />
+    },
+
 ];
 
 const Sidebar = ({
@@ -190,6 +203,31 @@ const Sidebar = ({
                                     </ListItem>
                                 )
                             })}
+                            <ListItem disablePadding>
+                                        <ListItemButton onClick={()=>{
+                                            navigate("/verify");
+                                            setActive("verify");
+                                        }}
+                                        sx={{
+                                            backgroundColor:active === "verify" ? theme.palette.secondary[300] : "transparent",
+                                            color:active === "verify" ? theme.palette.primary[600] : theme.palette.secondary[100],
+                                        }}
+                                        >
+                                            <ListItemIcon
+                                            sx={{ml:"1rem",
+                                            color:active === "verify" ? theme.palette.primary[600] : theme.palette.secondary[200],
+                                        }}
+                                            >
+                                                <VerifiedOutlined />
+                                            </ListItemIcon>
+                                            <ListItemText primary={"Verify Account"} />
+                                            {active === "verify" && (
+                                                <ChevronRightOutlined 
+                                                sx={{ml:"auto"}}
+                                                />
+                                            )}
+                                        </ListItemButton>
+                                    </ListItem>
                         </List>
                     </Box>
                         {/* User Details
