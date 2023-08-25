@@ -30,6 +30,9 @@ import Breakdown from "./pages/Dashboard/BreakDown/Breakdown";
 import Performance from "./pages/Dashboard/Performance/Performance";
 import Register from "./pages/Dashboard/Organization/Register";
 import Profile from "./pages/Dashboard/Account/Profile";
+import ViewOrganization from "./pages/Dashboard/Organization/ViewOrganization";
+import UpdatePassword from "./pages/Dashboard/Account/UpdatePassword";
+import VerifyAccount from "./pages/Dashboard/Account/VerifyAccount";
 
 
 function App() {
@@ -46,9 +49,9 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/products" element={<Products />}/>
-              <Route path="/add-products" element={<AddProducts />}/>
-              <Route path="/product/:productID" element={<ViewProduct />}/>
+              <Route path="/products" element={<Products />} />
+              <Route path="/add-products" element={<AddProducts />} />
+              <Route path="/product/:productID" element={<ViewProduct />} />
               <Route path="/product/update/:productID" element={<UpdateProducts />} />
               <Route path="/category" element={<Category />} />
 
@@ -65,14 +68,18 @@ function App() {
               <Route path="/performance" element={<Performance />} />
 
               <Route path="/register-organization" element={<Register />} />
+              <Route path="/organization" element={<ViewOrganization />} />
 
               <Route path="/profile" element={<Profile />} />
+              <Route path="/update-password" element={<UpdatePassword />} />
+              <Route path="/verify" element={<VerifyAccount />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/forget-password" element={<ForgetPassword />}/>
+            <Route path="/forget-password" element={<ForgetPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-      
+
+
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
