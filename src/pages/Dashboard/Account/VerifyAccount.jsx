@@ -57,7 +57,7 @@ const VerifyAccount = () => {
   }
   return (
     <Box m="1.5rem 2.5rem">
-      {user && user.isVerified ? (<Box>
+      {user && !user.isVerified ? (<Box>
         <Header title="Verify Account" subtitle="Verify your account from here." />
         <ToastContainer
           position="top-right"

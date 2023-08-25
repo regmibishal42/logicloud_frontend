@@ -84,21 +84,21 @@ const ViewOrganization = () => {
                             <TextField
                                 label="City"
                                 name="City"
-                                value={data?.Address?.City}
+                                value={data?.Address?.City || ""}
                                 disabled
                                 sx={{ width: "50%" }}
                             />
                             <TextField
                                 label="District"
                                 name="District"
-                                value={data?.Address?.District}
+                                value={data?.Address?.District || ""}
                                 disabled
                                 sx={{ width: "50%" }}
                             />
                               <TextField
                                 label="State"
                                 name="State"
-                                value={data?.Address?.State}
+                                value={data?.Address?.State|| ""}
                                 disabled
                                 sx={{ width: "50%" }}
                             />

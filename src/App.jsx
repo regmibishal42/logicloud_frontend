@@ -33,6 +33,7 @@ import Profile from "./pages/Dashboard/Account/Profile";
 import ViewOrganization from "./pages/Dashboard/Organization/ViewOrganization";
 import UpdatePassword from "./pages/Dashboard/Account/UpdatePassword";
 import VerifyAccount from "./pages/Dashboard/Account/VerifyAccount";
+import ProductSales from "./pages/Dashboard/ProductSales/ProductSales";
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
               <Route path="/daily" element={<Daily />} />
               <Route path="/monthly" element={<Monthly />} />
               <Route path="/breakdown" element={<Breakdown />} />
+              <Route path="/product-sales" element={<ProductSales />} />
 
               <Route path="/staffs" element={<Staffs />} />
               <Route path="add-staff" element={<AddStaff />} />
