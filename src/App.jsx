@@ -29,6 +29,7 @@ import Monthly from "./pages/Dashboard/Monthly/Monthly";
 import Breakdown from "./pages/Dashboard/BreakDown/Breakdown";
 import Performance from "./pages/Dashboard/Performance/Performance";
 import Register from "./pages/Dashboard/Organization/Register";
+import Profile from "./pages/Dashboard/Account/Profile";
 
 
 function App() {
@@ -64,6 +65,8 @@ function App() {
               <Route path="/performance" element={<Performance />} />
 
               <Route path="/register-organization" element={<Register />} />
+
+              <Route path="/profile" element={<Profile />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
