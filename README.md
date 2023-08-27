@@ -1,8 +1,8 @@
 LogiCloud (Logistics in Cloud) is a business management system targeted towards small businesses to manage their day to day tasks.
 
 Snapshots:
-[!Dashboard](https://github.com/regmibishal42/logicloud_frontend/blob/main/images/Screenshot%20from%202023-08-24%2013-36-19.png)
-
+Dasboard
+<img src="https://github.com/regmibishal42/logicloud_frontend/blob/main/images/Screenshot%20from%202023-08-24%2013-36-19.png" alt="Dashbord Img" width="200"/>
 The backend needed to run this app is availaibale in https://github.com/regmibishal42/final-sem-project-backend/
 
 
