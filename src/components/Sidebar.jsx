@@ -27,7 +27,7 @@ import {
     SettingsOutlined,
     BadgeOutlined,
     AddCardOutlined,
-    AccountCircleOutlined,
+    BarChartOutlined,
     CorporateFareOutlined,
     PasswordOutlined,
     VerifiedOutlined
@@ -77,6 +77,10 @@ const NavItems = [
     {
         text: "Monthly",
         icon: <CalendarMonthOutlined />
+    },
+    {
+        text: "Product-Sales",
+        icon: <BarChartOutlined />
     },
     {
         text: "Breakdown",
