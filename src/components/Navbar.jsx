@@ -10,7 +10,7 @@ import {
 } from "@mui/icons-material";
 import FlexBetween from './FlexBetween';
 import { useDispatch } from "react-redux";
-import { setMode } from "../state/index";
+import { setMode, setUser } from "../state/index";
 // import userImage from "../assets";
 import { useTheme, AppBar, Toolbar,IconButton,InputBase,Box,Divider,Typography,Button,Menu,MenuItem } from "@mui/material"
 import profileImage from "../assets/userImage.png";
@@ -32,6 +32,7 @@ const Navbar = ({
         setAnchorEl(null)
         removeToken();
         navigate('/login')
+        dispatch(setUser({}))
         return
     };
     return <AppBar
